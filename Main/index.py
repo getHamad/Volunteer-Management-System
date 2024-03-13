@@ -13,3 +13,4 @@ class display:
             x = "Hello"
             print(x)
 
+display.details()
