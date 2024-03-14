@@ -10,7 +10,7 @@ class test:
 class display:
 
       def details():
-            x = "Hellooooo"
+            x = "Hellooooo testing an extention"
             print(x)
 
 display.details()
