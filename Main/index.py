@@ -1,16 +1,54 @@
 """
-Testing to push to github edited by abdulla (edited by abdulla)
+
+
 """
+class Task:
+      """
+      """
+      def __init__(self,title,taskNO,requiredSkills,creditHour,numOfVolunteersNeeded, status) -> None:
+            self.title = title
+            self.taskNo = taskNO
+            self.requiredSkills = requiredSkills
+            self.creditHour = creditHour
+            self.numOfVolunteersNeeded = numOfVolunteersNeeded
+            self.status = status
 
-class test: 
-      
+            
+
+
+
+class Volunteer_Opportunity:
+      """
+      """
       def __init__(self) -> None:
-            pass 
+            pass
+      
+      
+      
+class Organization:
+      """
+      """
+      def __init__(self) -> None:
+            pass
+      
 
-class display:
-
-      def details():
-            x = "Hellooooo testing an extension"
-            print(x)
-
-display.details()
+class User:
+      """
+      Super class of three other classes (Administrator, Organization Representative, and Volunteer)
+      """
+      def __init__(self) -> None:
+            pass
+ 
+ 
+class Volunteer(User):
+      """
+      """     
+      def __init__(self) -> None:
+            pass # add super().__init__ after fixing user attributes
+class Organization_Representative(User):
+      """
+      """
+      def __init__(self) -> None:
+            pass # add super().__init__ after fixing user attributes
+      
+      
