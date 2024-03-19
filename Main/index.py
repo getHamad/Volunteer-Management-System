@@ -10,16 +10,21 @@ class Task:
       """
 
       taskRecord = {}      
+      
       def __init__(self) -> None:
-            self.__title = str(input("Task title: "))
+            print("Enter the following information")
             self.__taskNo = str(input("Task number: "))
-            self.__requiredSkills = str(input("skills separated by comma: ").split(","))
+            self.__title = str(input("Task title: "))
+            self.__requiredSkills = str(input("Skills (separated by comma): ").split(","))
             self.__creditHour = int(input("Credit Hours: "))
             self.__numOfVolunteersNeeded = int(input("Number of Volunteers: "))
-            self.__status = str(input("Status"))
+            self.__status = "Newly Added"
             Task.taskRecord [self.__taskNo] = {
-                  
+                  # missing values
             }
+            
+            # getters & setters
+      
             
 
 
@@ -29,16 +34,32 @@ class Volunteer_Opportunity:
       """
       opportunityDict = {}
       opportunityCounter = 0
-      def __init__(self,
-                   title = '', date = date, startingTime = '', endingTime = '', location = ''
-                   ) -> None:
+      
+      
+      def __init__(self) -> None:
             Volunteer_Opportunity.opportunityCounter += 1
-            self.__title = title
-            self.__date = date
-            self.__startingTime = startingTime
-            self.__endingTime = endingTime
-            self.__location = location
+            self.__title = str(input("Volunteer Opportunity: "))
+            self.__date = input("date of birth (yyyy-mm-dd): ").split("-")
+            self.__date = date(int(self.__DOJ[0]), int(self.__DOJ[1]), int(self.__DOJ[2]))
+            self.__startingTime = str(input("Starting Time (00:00): "))
+            self.__endingTime = str(input("Ending Time (00:00): "))
+            self.__location = str(input("Location: "))
+            self.__tasks = []
+            self.__assignedVolunteers = []
+            self.__interest = []
             
+            Volunteer_Opportunity.opportunityDict [Volunteer_Opportunity.opportunityCounter] = {
+                  "title":self.__title,
+                  "date":self.__date,
+                  "starting time":self.__startingTime,
+                  "ending time": self.__endingTime,
+                  "location":self.__location,
+                  "tasks": self.__tasks,
+                  "assignedVolunteers": self.__assignedVolunteers,
+                  "interest": self.__interest
+            }
+            
+            # getters & setters
             
       
       
@@ -46,13 +67,21 @@ class Volunteer_Opportunity:
 class Organization:
       """
       """
-      def __init__(self,
-                   organization_name = '', description = '', organizationID = ''
-                   ) -> None:
-            self.__organization_name = organization_name
-            self.__description = description
-            self.__organizationID = organizationID
+      organizationRecord = {}
+      def __init__(self) -> None:
+            self.__organization_name = str(input("Organization Name: ")).replace(" ","-")
+            self.__description = str(input("Description: "))
+            self.__opportunities = [ ]
+            self.__representatives = [ ]
             
+            Organization.organizationRecord [self.__organization_name] = {
+                  "description": self.__description,
+                  "opportunities": self.__opportunities,
+                  "representatives": self.__representatives
+            }   
+            
+            
+            # getters & setters
             
       
 
@@ -83,6 +112,7 @@ class User:
             self.__DOJ = datetime.today()
             
 
+            # getters & setters
 
  
  
@@ -105,6 +135,7 @@ class Volunteer(User):
                   "skills": self.__skills,
                   "tasks": self.__tasks,
                   "completedTasks": self.__completedTasks,
+                  "totalVolunteeringHrs" : self.__totalVolunteeringHrs
                
             }
             
@@ -118,6 +149,7 @@ class Volunteer(User):
                   "DOB": self._User__DOB      
             }
             
+            # getters & setters
             
       def test(self): 
             return self.__userID
@@ -126,25 +158,60 @@ class Organization_Representative(User):
       """
       organizationRepRecord = {}
 
-      
-      def __init__(self, 
-                   fullName, mobile, email, educationLevel, DOJ, DOB
-                   ) -> None:
-            super().__init__( fullName, mobile, email, educationLevel, DOJ, DOB)
-            self.__userID = "O" + str(self._User__userID)
 
+      
+      def __init__(self) -> None:
+            super().__init__()
+            self.__userID = "O" + str(self._User__userID)
+      
+            Organization_Representative.organizationRepRecord [self.__userID] = {
+                  "User ID": self.__userID
+            }
+
+            User.userRecord [self.__userID] = {
+                  "fullname": self._User__fullName,
+                  "mobile": self._User__mobile,
+                  "email": self._User__email,
+                  "educationLevel": self._User__educationLevel,
+                  "DOJ": self._User__DOJ,
+                  "DOB": self._User__DOB      
+            }
             
+            # getters & setters
+
+class Certificate:
+      """
+      """
+      def __init__(self) -> None:
+            self.__certificateID #add id here
+            self.__volunteer = "" # get volunteer name using
+            self.__issueDate = datetime.today().date()  # printing the date of creation    
+            
+      # functions - getters & setters
 class Administrator(User):
       """
       """
       administratorRecord = []
       
-      def __init__(self, 
-                   userID, fullName, mobile, email, educationLevel, DOJ, DOB
-                   )-> None:
-            super().__init__(userID, fullName, mobile, email, educationLevel, DOJ, DOB)
+      def __init__(self)-> None:
+            super().__init__()
             self.__userID = "A" + str(self._User__userID)
 
+            Administrator.administratorRecord [self.__userID] = {
+                  "User ID": self.__userID
+            }
+            
+            User.userRecord [self.__userID] = {
+                  "fullname": self._User__fullName,
+                  "mobile": self._User__mobile,
+                  "email": self._User__email,
+                  "educationLevel": self._User__educationLevel,
+                  "DOJ": self._User__DOJ,
+                  "DOB": self._User__DOB      
+            }
+
+            
 
 
+            # getters & setters
 
