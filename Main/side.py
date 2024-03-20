@@ -166,7 +166,9 @@ class Volunteer_Opportunity:
       def getInterest(self):
             return self.__interest
       
-
+      def addTask(self):
+            x = Task()
+            
             
       
             
