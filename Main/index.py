@@ -24,6 +24,41 @@ class Task:
             }
             
             # getters & setters
+      def setTaskNo(self,taskNo):
+            self.__taskNo = taskNo
+      
+      def getTaskNo(self):
+            return self.__taskNo
+      
+      def setTitle(self,title):
+            self.__title = title
+      
+      def getTitle(self):
+            return self.__title
+      
+      def setRequiredSkills(self,skills):
+            self.__requiredSkills = skills
+      
+      def getRequiredSkills(self):
+            return self.__requiredSkills
+      
+      def setCreditHour(self,hour):
+            self.__creditHour = hour
+      
+      def getCreditHour(self):
+            return self.__creditHour
+      
+      def setNumOfVolunteerNeeded(self,num):
+            self.__numOfVolunteersNeeded = num
+      
+      def getNumOfVolunteerNeeded(self):
+            return self.__numOfVolunteersNeeded
+      
+      def setStatus(self,status):
+            self.__status = status
+      
+      def getStatus(self):
+            return self.__status
       
             
 
@@ -60,6 +95,7 @@ class Volunteer_Opportunity:
             }
             
             # getters & setters
+      def setTitle(self,Title):
             
       
       
