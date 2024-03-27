@@ -5,9 +5,11 @@ from datetime import datetime, date
 
 
 """
+tasksRecord = []
 class Task:
       """
       """      
+
       taskIdCounter = 0
       
       def __init__(self, title = "", skills = "", creditHours=0, numOfVol=0):
@@ -19,6 +21,7 @@ class Task:
             self.__creditHour = creditHours
             self.__numOfVolunteersNeeded = numOfVol
             self.__status = "Newly Added"
+            tasksRecord.append(self)
             
             # getters & setters
       def setTaskNo(self,
@@ -53,15 +56,32 @@ class Task:
                                   num):
             self.__numOfVolunteersNeeded = num
       
-      def getNumOfVolunteerNeeded(self):
-            return self.__numOfVolunteersNeeded
+      def getNumOfVolunteerNeeded(self,taskNo):
+            for task in tasksRecord:
+                  if task.getTaskNo() == taskNo:
+                        return f"This task requires {task.__numOfVolunteersNeeded} persons"
+      #Exception Handling, task number not found!!!
       
       def updateStatus(self,
-                       status):
-            self.__status = status
+                       taskNo,status):
+            for task in tasksRecord:
+                  if task.getTaskNo() == taskNo:
+                        task.__status = status
+      #Exception Handling, task number not found!!!
+            
                  
-      def getStatus(self):
-            return self.__status
+      def getStatus(self,
+                    taskNo):
+            for task in tasksRecord:
+                  if task.getTaskNo() == taskNo:
+                        return f"Status of task: {task.__status}"
+      #Exception Handling, task number not found!!!
+            
+      
+      def __str__(self):
+        return f"Task No: {self.__taskNo}\nTitle: {self.__title}\nSkills: {self.__requiredSkills}\nCredit Hours: {self.__creditHour}\nVolunteers Needed: {self.__numOfVolunteersNeeded}\nStatus: {self.__status}\n===================="
+      
+
       
             
 
@@ -74,12 +94,11 @@ class Task:
       
             
       
-
+userRecord = []
 class User:
       """
       Super class of three other classes (Administrator, Organization Representative, and Volunteer)
       """
-      userRecord = {}
       
       today = datetime.now()
       year = str(today.year)
@@ -100,6 +119,7 @@ class User:
             self.__DOB = DOB
             self.__DOJ = DOJ
             self.__DOJ = datetime.today()
+            userRecord.append(self)
 
             
 
@@ -116,7 +136,8 @@ class User:
             self.__fullName = name
       
       def getFullName(self):
-            return self.__fullName
+             return self.__fullName
+
       
       def setMobile(self,
                     mobile):
@@ -152,6 +173,11 @@ class User:
       
       def getDOJ(self):
             return self.__DOJ
+      
+      def __str__(self):
+            return f"User ID: {self.__userID}\nName: {self.__fullName}\nMobile: {self.__mobile}\nEamil: {self.__email}\nEducation Level: {self.__educationLevel}\nDate of Birth: {self.__DOB}\nDate of Join: {self.__DOJ}"
+
+
  
  
 
@@ -469,5 +495,11 @@ class Administrator(User):
 
 
 
-
+tasksRecord = []
+task1 = Task("Clean","Move",3,2)
+for task in tasksRecord:
+      print(task)
+task1.updateStatus(4,"Completed")
+print(task1.getStatus(4))
+print(task1.getNumOfVolunteerNeeded(4))
 
