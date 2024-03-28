@@ -1,14 +1,16 @@
 from datetime import datetime, date
 
 
+
 """
 
 
 """
-tasksRecord = []
 class Task:
       """
+      Description
       """      
+      tasksRecord = []
 
       taskIdCounter = 0
       
@@ -21,7 +23,7 @@ class Task:
             self.__creditHour = creditHours
             self.__numOfVolunteersNeeded = numOfVol
             self.__status = "Newly Added"
-            tasksRecord.append(self)
+            Task.tasksRecord.append(self)
             
             # getters & setters
       def setTaskNo(self,
@@ -55,24 +57,25 @@ class Task:
       def setNumOfVolunteerNeeded(self,
                                   num):
             self.__numOfVolunteersNeeded = num
-      
-      def getNumOfVolunteerNeeded(self,taskNo):
-            for task in tasksRecord:
+            """
+            Global functions 
+            """
+      def getNumOfVolunteerNeeded(taskNo):
+            for task in Task.tasksRecord:
                   if task.getTaskNo() == taskNo:
-                        return f"This task requires {task.__numOfVolunteersNeeded} persons"
+                           return f"This task requires {task.__numOfVolunteersNeeded} persons to be accomplished"
       #Exception Handling, task number not found!!!
       
       def updateStatus(self,
                        taskNo,status):
-            for task in tasksRecord:
+            for task in Task.tasksRecord:
                   if task.getTaskNo() == taskNo:
                         task.__status = status
       #Exception Handling, task number not found!!!
-            
-                 
+      
       def getStatus(self,
                     taskNo):
-            for task in tasksRecord:
+            for task in Task.tasksRecord:
                   if task.getTaskNo() == taskNo:
                         return f"Status of task: {task.__status}"
       #Exception Handling, task number not found!!!
@@ -82,23 +85,19 @@ class Task:
         return f"Task No: {self.__taskNo}\nTitle: {self.__title}\nSkills: {self.__requiredSkills}\nCredit Hours: {self.__creditHour}\nVolunteers Needed: {self.__numOfVolunteersNeeded}\nStatus: {self.__status}\n===================="
       
 
-      
-            
-
-
-
-    
          
       
 
       
             
       
-userRecord = []
+
 class User:
       """
       Super class of three other classes (Administrator, Organization Representative, and Volunteer)
       """
+      
+      userRecord = []
       
       today = datetime.now()
       year = str(today.year)
@@ -119,7 +118,7 @@ class User:
             self.__DOB = DOB
             self.__DOJ = DOJ
             self.__DOJ = datetime.today()
-            userRecord.append(self)
+            User.userRecord.append(self)
 
             
 
@@ -174,6 +173,10 @@ class User:
       def getDOJ(self):
             return self.__DOJ
       
+            """
+            Global functions 
+            """
+            
       def __str__(self):
             return f"User ID: {self.__userID}\nName: {self.__fullName}\nMobile: {self.__mobile}\nEamil: {self.__email}\nEducation Level: {self.__educationLevel}\nDate of Birth: {self.__DOB}\nDate of Join: {self.__DOJ}"
 
@@ -185,7 +188,8 @@ class User:
 class Volunteer(User):
       """
       """
-
+      volunteerRecord = []
+      
       def __init__(self,
                    fullname = '',mobile = '',email = '',educationLevel = '',DOJ = date, DOB = date, skills="") -> None:
             super().__init__(fullname,mobile,email ,educationLevel,DOJ , DOB)
@@ -194,7 +198,7 @@ class Volunteer(User):
             self.__tasks = []
             self.__completedTasks = []
             self.__totalVolunteeringHrs = 0
-            
+            Volunteer.volunteerRecord.append(self)
             
             # getters & setters
       def setUserID(self,
@@ -246,13 +250,28 @@ class Volunteer(User):
       def getCompletedTasks(self):
             return self.__completedTasks
       
-
-                  
       
       def getTotalVolunteerHours(self):
             return self.__totalVolunteeringHrs
       
       
+            """
+            Global functions 
+            """
+            
+      def addCompletedTasks(self,
+                            task:Task()): # type: ignore
+            if task in self.__tasks: 
+                  task.updateStatus("Completed")
+                  self.setTotalVolunteerHours("+", task.getCreditHour())
+                  self.__completedTasks.append(task)
+                  self.__tasks.remove(task)
+            else: 
+                  return f"{task}, is not in our records"
+
+
+      def __str__(self):
+            return super().__str__()
 
             
 
@@ -328,6 +347,12 @@ class Volunteer_Opportunity:
                   data += "\t" + {str(obj)} + "\n"
             return data
 
+
+            """
+            Global functions 
+            """
+            
+            
       def setInterest(self,
                       interest = Volunteer()):
             self.__interest.append(interest)
@@ -361,15 +386,18 @@ class Volunteer_Opportunity:
 
 class Organization_Representative(User):
       """
+      
       """
 
+      organizersRecord = []
       
       def __init__(self,
                    fullname = '',mobile = '',email = '',educationLevel = '',DOJ = date, DOB = date
                    ) -> None:
             super().__init__(fullname,mobile,email ,educationLevel,DOJ , DOB)
             self.__userID = "O" + str(self._User__userID)
-      
+            
+            Organization_Representative.organizersRecord.append(self)
             
             # getters & setters
       
@@ -379,6 +407,7 @@ class Organization_Representative(User):
 
 class Organization:
       """
+      
       """
       def __init__(self,organization_name= " ",description ="") -> None:
             self.__organization_name = organization_name.replace(" ","-")
@@ -401,7 +430,7 @@ class Organization:
       def getDescription(self):
             return self.__description
       
-      def createOpportunities(self,
+      def createOpportunities(self, # update this function 
                               title,date,startingTime,endingTime,location):
 
             opportunity = Volunteer_Opportunity(title,date,startingTime,endingTime,location)
@@ -427,6 +456,7 @@ class Organization:
       
 class Certificate:
       """
+      Description
       """
       today = datetime.now()
       year = str(today.year)
@@ -460,11 +490,14 @@ class Certificate:
 
 class Administrator(User):
       """
+      Description
       """      
+      
+      administratorsRecord = []
       def __init__(self,
                    fullname = '',mobile = '',email = '',educationLevel = '',DOJ = date, DOB = date
                    )-> None:
-            super().__init__(fullname,mobile,email ,educationLevel,DOJ , DOB)
+            super().__init__(fullname, mobile, email, educationLevel, DOJ, DOB)
             self.__userID = "A" + str(self._User__userID)
 
 
@@ -495,11 +528,11 @@ class Administrator(User):
 
 
 
-tasksRecord = []
+"""tasksRecord = []
 task1 = Task("Clean","Move",3,2)
 for task in tasksRecord:
       print(task)
 task1.updateStatus(4,"Completed")
 print(task1.getStatus(4))
-print(task1.getNumOfVolunteerNeeded(4))
+print(task1.getNumOfVolunteerNeeded(4))"""
 
