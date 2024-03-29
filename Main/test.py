@@ -1,88 +1,45 @@
-from index import *
+from Main.Index import *
 
 
 
-d = {}
-def test( id, name = ""): 
-      id = id
-      name = name
-      d [id] = {
-            "name": name
-      }
+task1 = Task("Car cleaning","communication, accuracy",3,2)
+task2 = Task("Car cleaning","strength, accuracy",3,2)
+vol1 = Volunteer("Abdulla","0501221433","as@zu.ac.ae",'phd',date(2024,2,12),date(2003,4,27))
+
+Organization1 = Organization("ADNOC", "ADNOC Cleaning Services")
+
+volOpp = Organization1.createOpportunities("Clean",date(2023,2,2),"Afternoon","Night","AD")
+
+rep1 = Organization_Representative("Ali","0501221433","as@zu.ac.ae",'Masters',date(2024,2,12),date(2003,4,27))
+
+admin1 = Administrator("Ahmed","0501221433","as@zu.ac.ae",'Bachelor',date(2024,2,12),date(2003,4,27))
+
+arep1 = admin1.assignRepresentative(Organization1, rep1)
+print(Task.getNumOfVolunteerNeeded(4)
+)
+
+
+# adding a task 
+x = input("enter task name: ")
+y = input("enter task skills separated by ,: ")
+u = input('enter credit hour amount: ')
+z = input('enter task required number of vol: ')
+
+Task(x,y,u,z)
+
+
+for task in Task.tasksRecord: 
+      print(task)
       
-      return "done"
+x = input("enter task name: ")
+y = input("enter task skills separated by ,: ")
+u = input('enter credit hour amount: ')
+z = input('enter task required number of vol: ')
+
+Task(x,y,u,z)
+
+
+for task in Task.tasksRecord: 
+      print(task)
       
-test(1, "hamad a almazrouei")
-test(2, "ahmed")
-test(3, "rashid")
-print(d)
-
-
-
-"""for i in d.items(): 
-      print(i) """
       
-def update_id(id_to_update, new_id):
-    if id_to_update in d:
-        d[new_id] = d.pop(id_to_update)  # Update id and preserve associated data
-        print(f"Updated id {id_to_update} to {new_id}")
-    else:
-        print(f"Id {id_to_update} not found in the dictionary")
-
-# Example: Update id 2 to 4
-update_id(2, 4)
-print(d)     
-
-
-
-for i, data, in d.items():
-      if i == 1:
-            print(data['name'])
-      else: 
-            pass
-            
-            
-print("\n\n")
-v1 = Volunteer()
-v2 = Volunteer()
-
-print(Volunteer.volunteerRecord)
-print("\n\n")
-print(f"{User.userRecord}", )
-
-
-def system():
-    # While the function is called print the options and ask the user to select from 1-6
-    while True:
-        print(" ")
-        print("  Electronic Coffee System")
-        print("|__________________________|")
-        print("1. Add a New Order")
-        print("2. List All Orders")
-        print("3. Find an Order")
-        print("4. Delete an Order")
-        print("5. Save and Display Result")
-        print("6. Exit")
-        print("|__________________________|")
-
-        userIn = int(input("Enter your request from the list above (1-6): "))
-
-        # Creating if statements that calls function depending on the user input that the system function received
-        if userIn == 1:
-            add_order()
-        elif userIn == 2:
-            list_orders()
-        elif userIn == 3:
-            find_order()
-        elif userIn == 4:
-            del_orders()
-        elif userIn == 5:
-            save()
-        elif userIn == 6:
-            print("Exiting system, goodbye!")
-            break
-        else:
-            print("Invalid input, please select an option between 1 and 6 ..")
-
-
-system()
