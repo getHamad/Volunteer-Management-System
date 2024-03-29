@@ -8,7 +8,7 @@ from datetime import datetime, date
 """
 class Task:
       """
-      Description
+      Task class that contains attributes including task number,title, required skills, credit hours, number of volunteers, and status.
       """      
       tasksRecord = []
 
@@ -66,18 +66,12 @@ class Task:
                            return f"This task requires {task.__numOfVolunteersNeeded} persons to be accomplished"
       #Exception Handling, task number not found!!!
       
-      def updateStatus(self,
-                       taskNo,status):
-            for task in Task.tasksRecord:
-                  if task.getTaskNo() == taskNo:
-                        task.__status = status
+      def updateStatus(self,status):
+            self.__status = status
       #Exception Handling, task number not found!!!
       
-      def getStatus(self,
-                    taskNo):
-            for task in Task.tasksRecord:
-                  if task.getTaskNo() == taskNo:
-                        return f"Status of task: {task.__status}"
+      def getStatus(self):
+            return self.__status
       #Exception Handling, task number not found!!!
             
       
@@ -95,6 +89,7 @@ class Task:
 class User:
       """
       Super class of three other classes (Administrator, Organization Representative, and Volunteer)
+      User class contains attributes : user id, full name, mobile number, email, education level, date of birth, and date of join.
       """
       
       userRecord = []
@@ -187,6 +182,7 @@ class User:
 
 class Volunteer(User):
       """
+      Child class of User with attributes : user id, skills, list of tasks, list of completed tasks, and total volunteering hours. 
       """
       volunteerRecord = []
       
@@ -219,6 +215,9 @@ class Volunteer(User):
             return data
       
       
+      def addTask(self, task = Task()):
+               self.__tasks.append(task)
+      
       def getTasks(self):
             data = ""
             for obj in self.__tasks:
@@ -236,16 +235,11 @@ class Volunteer(User):
                   return f"Error, check your inputs again"
             
             
-      def addCompletedTasks(self,
-                            task:Task()): # type: ignore
-            if task in self.__tasks: 
-                  task.updateStatus("Completed")
-                  self.setTotalVolunteerHours("+", task.getCreditHour())
-                  self.__completedTasks.append(task)
-                  self.__tasks.remove(task)
-            else: 
-                  return f"{task}, is not in our records"
-                  
+      def addCompletedTasks(self, task = Task()): # type: ignore
+            task.updateStatus("Completed")
+            self.setTotalVolunteerHours("+", task.getCreditHour())
+            self.__completedTasks.append(task)
+            self.__tasks.remove(task)
       
       def getCompletedTasks(self):
             return self.__completedTasks
@@ -259,15 +253,6 @@ class Volunteer(User):
             Global functions 
             """
             
-      def addCompletedTasks(self,
-                            task:Task()): # type: ignore
-            if task in self.__tasks: 
-                  task.updateStatus("Completed")
-                  self.setTotalVolunteerHours("+", task.getCreditHour())
-                  self.__completedTasks.append(task)
-                  self.__tasks.remove(task)
-            else: 
-                  return f"{task}, is not in our records"
 
 
       def __str__(self):
@@ -277,13 +262,15 @@ class Volunteer(User):
 
 class Volunteer_Opportunity:
       """
+      Opportunity class contains opportunities for volunteers. 
+      The class has attributes including title, date, starting time, ending time, location, list of tasks, list of assigned volunteers, and list of interested volunteers.
       """
-      opportunityCounter = 0
-      
+      randomCounter = 0
       
       def __init__(self,
                    title, date, startingTime, endingTime, location) -> None:
-            Volunteer_Opportunity.opportunityCounter += 1
+            Volunteer_Opportunity.randomCounter += 1
+            self.__opportunityCode = Volunteer_Opportunity.randomCounter
             self.__title = title
             self.__date = date
             self.__startingTime = startingTime
@@ -295,6 +282,12 @@ class Volunteer_Opportunity:
             
             
             # getters & setters
+      def setOpportunityCode(self,code):
+            self.__opportunityCode = code
+      
+      def getOpportunityCode(self):
+            return self.__opportunityCode
+      
       def setTitle(self, 
                    title):
             self.__title = title
@@ -330,24 +323,31 @@ class Volunteer_Opportunity:
       def getLocation(self):
             return self.__location
       
-      def setTasks(self,
-                   tasks):
-            self.__tasks = tasks
       
+      def addTask(self, 
+                  Task = Task()):
+            self.__tasks.append(Task)
+            
       def getTasks(self):
             return self.__tasks
       
-      def addAssignedVolunteers(self,
+      def addToAssignedVolunteers(self,
                                 volunteer = Volunteer()):
-            self.__assignedVolunteers.append(volunteer)
-
+            
+            if volunteer in self.__interest:
+                  self.__interest.remove(volunteer)
+                  self.__assignedVolunteers.append(volunteer)
+                  
+            for task in self.__tasks:
+                  volunteer.addTask(task)
+            
       def getAssignedVolunteers(self):
             data = ""
             for obj in self.__assignedVolunteers:
                   data += "\t" + {str(obj)} + "\n"
             return data
 
-
+            
             """
             Global functions 
             """
@@ -363,18 +363,25 @@ class Volunteer_Opportunity:
                   data += "\t" + str(obj) + "\n"
             return data
       
-      def addTask(self, 
-                  Task = Task()):
-            self.__tasks.append(Task)
+
             
-      def updateStatus(self,
+      def updateTaskStatus(self,
                        task = Task(), status = ""):
             if task in self.__tasks: 
-                  task.updateStatus(status)
+                  if status == "Completed": 
+                        for vol in self.__assignedVolunteers:
+                              vol.addCompletedTasks(task)
+                  else: 
+                        task.updateStatus(status)
+                        return f"task has been updated"
             else:
-                  return f"{task}, is not recorded"
+                  return f"{task}, is not assigned to this opportunity"
                         
     
+      def registerInterest(self, vol = Volunteer()):
+                  self.__interest.append(vol)
+                  
+             
       def __str__(self):
             return f"⎛ Title: {self.getTitle()} ⎞\n⎡ Date: {self.getDate()}\n├ Location: {self.getLocation()}\n├ Starting Time: {self.getStartingTime()}\n⎣ End Time: {self.getEndTime()}"
         
@@ -386,7 +393,7 @@ class Volunteer_Opportunity:
 
 class Organization_Representative(User):
       """
-      
+      Child class of User, with attributes including user Id. 
       """
 
       organizersRecord = []
@@ -407,13 +414,19 @@ class Organization_Representative(User):
 
 class Organization:
       """
-      
+      Organization class with attributes including organization name, description, list of opportunities, and list of representatives.
       """
-      def __init__(self,organization_name= " ",description ="") -> None:
+      
+      organizationRecord = []
+      
+      def __init__(self,organization_name= " ",description ="", orgCode=0) -> None:
             self.__organization_name = organization_name.replace(" ","-")
+            self.__organizationCode = "O" + str(orgCode)
             self.__description = description
             self.__opportunities = [ ]
             self.__representatives = [ ]
+            
+            Organization.organizationRecord.append(self)
             
             # getters & setters
       def setOrganizationName(self,
@@ -429,12 +442,20 @@ class Organization:
       
       def getDescription(self):
             return self.__description
-      
-      def createOpportunities(self, # update this function 
+            
+      def createOpportunity(self, # update this function 
                               title,date,startingTime,endingTime,location):
 
             opportunity = Volunteer_Opportunity(title,date,startingTime,endingTime,location)
             self.__opportunities.append(opportunity)
+            
+      def deleteOpportunity(self, opportunityCode):
+            try:
+                  for op in self.__opportunities:
+                        if op.getOpportunityCode() == opportunityCode:
+                              del(self)
+            except:
+                  return f"Failed to delete {self.__organization_name}"           
         
       
       def getOpportunities(self):
@@ -453,11 +474,29 @@ class Organization:
                   data += "\t" + str(op) + "\n"
             return data
       
+      def setOrgCode(self, code):
+                  self.__organizationCode = code
       
+      def getOrgCode(self):
+            return self.__organizatioCode
+
+      
+      def addOpportunityToOrg(orgCode, otitle, odate, ostartingTime, oendingTime, olocation):
+            orgName = ""
+            
+            for org in Organization.organizationRecord: 
+                if org.getOrgCode() == orgCode: 
+                      orgName = org.getOrganizationName()
+                      org.createOpportunity(otitle, odate, ostartingTime, oendingTime, olocation)
+                else: 
+                      return f"Invalid Organization Code"
+            return f"Opportunity has been added to {orgName} successfully"
+                        
+            
 class Certificate:
       """
-      Description
-      """
+      Certificate class with attributes including certificate ID, volunteer name, and issue date
+.      """
       today = datetime.now()
       year = str(today.year)
       nums = str("0000")
@@ -490,10 +529,10 @@ class Certificate:
 
 class Administrator(User):
       """
-      Description
+      Child class of User with attributes including user 
       """      
-      
       administratorsRecord = []
+     
       def __init__(self,
                    fullname = '',mobile = '',email = '',educationLevel = '',DOJ = date, DOB = date
                    )-> None:
@@ -508,6 +547,13 @@ class Administrator(User):
       
       def getUserID(self):
             return self.__userID
+      
+      def registerOrganizations(self,name,code,description,opportunities,representatives):
+            try:
+                  org = Organization(name,code,description)
+                  return f"Organization registered"
+            except:
+                  return f"Failed to register organization"
 
       def assignRepresentative(self, 
                                org = Organization(), rep = Organization_Representative()):

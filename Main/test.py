@@ -47,7 +47,7 @@ v1 = Volunteer()
 v2 = Volunteer()
 
 print(Volunteer.volunteerRecord)
-print("\ngdfgdgdfg\n")
+print("\n\n")
 print(f"{User.userRecord}", )
 
 
