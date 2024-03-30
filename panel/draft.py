@@ -6,9 +6,7 @@ d = {}
 def test(id, name=""):
     id = id
     name = name
-    d[id] = {
-        "name": name
-    }
+    d[id] = {"name": name}
 
     return "done"
 
@@ -34,9 +32,12 @@ def update_id(id_to_update, new_id):
 update_id(2, 4)
 print(d)
 
-for i, data, in d.items():
+for (
+    i,
+    data,
+) in d.items():
     if i == 1:
-        print(data['name'])
+        print(data["name"])
     else:
         pass
 
@@ -46,7 +47,9 @@ v2 = Volunteer()
 
 print(Volunteer.volunteerRecord)
 print("\n\n")
-print(f"{User.userRecord}", )
+print(
+    f"{User.userRecord}",
+)
 
 
 def system():
