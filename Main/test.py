@@ -1,4 +1,5 @@
-from main.index import *
+from datetime import date, datetime
+"""from main.index import *
 
 
 task1 = Task(
@@ -45,4 +46,5 @@ Task(x, y, u, z)
 
 
 for task in Task.tasksRecord:
-    print(task)
+    print(task)"""
+

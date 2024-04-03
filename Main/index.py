@@ -85,6 +85,9 @@ class User:
     User class contains attributes : user id, full name, mobile number, email, education level, date of birth, and date of join.
     """
 
+
+
+
     userRecord = []
 
     today = datetime.now()
@@ -135,9 +138,21 @@ class User:
         return self.__email
 
     def setEducationLevel(self, level):
+        """
+        setEducationLevel _summary_
+
+        Args:
+            level (_type_): _description_
+        """
         self.__educationLevel = level
 
     def getEducationLevel(self):
+        """
+        getEducationLevel _summary_
+
+        Returns:
+            _type_: _description_
+        """
         return self.__educationLevel
 
     def setDOB(self, date):
@@ -206,12 +221,28 @@ class Volunteer(User):
         self.__tasks.append(task)
 
     def getTasks(self):
+        """
+        getTasks _summary_
+
+        Returns:
+            _type_: _description_
+        """
         data = ""
         for obj in self.__tasks:
             data += "\t" + str(obj) + "\n"
         return data
 
     def setTotalVolunteerHours(self, sign="", amount=0):
+        """
+        setTotalVolunteerHours _summary_
+
+        Args:
+            sign (str, optional): _description_. Defaults to "".
+            amount (int, optional): _description_. Defaults to 0.
+
+        Returns:
+            _type_: _description_
+        """
         if sign == "+":
             self.__totalVolunteeringHrs += amount
         elif sign == "-":
@@ -219,7 +250,13 @@ class Volunteer(User):
         else:
             return f"Error, check your inputs again"
 
-    def addCompletedTasks(self, task=Task()):  # type: ignore
+    def addCompletedTasks(self, task=Task()):  
+        """
+        addCompletedTasks _summary_
+
+        Args:
+            task (_type_, optional): _description_. Defaults to Task().
+        """
         task.updateStatus("Completed")
         self.setTotalVolunteerHours("+", task.getCreditHour())
         self.__completedTasks.append(task)
@@ -234,7 +271,20 @@ class Volunteer(User):
         """
         Global functions 
         """
+    def getAllVolunteers():
+        """
+        getAllVolunteers returns all existing volunteers in the system
 
+        Returns:
+            String: returns a string of volunteer information
+        """
+        
+        data = ""
+        for obj in Volunteer.volunteerRecord:
+            data += "\t" + str(obj) + "\n"
+        return data
+    
+    
     def __str__(self):
         return super().__str__()
 
@@ -304,7 +354,12 @@ class Volunteer_Opportunity:
         return self.__tasks
 
     def addToAssignedVolunteers(self, volunteer=Volunteer()):
+        """
+        addToAssignedVolunteers _summary_
 
+        Args:
+            volunteer (_type_, optional): _description_. Defaults to Volunteer().
+        """
         if volunteer in self.__interest:
             self.__interest.remove(volunteer)
             self.__assignedVolunteers.append(volunteer)
@@ -313,6 +368,7 @@ class Volunteer_Opportunity:
             volunteer.addTask(task)
 
     def getAssignedVolunteers(self):
+        
         data = ""
         for obj in self.__assignedVolunteers:
             data += "\t" + {str(obj)} + "\n"
@@ -323,15 +379,37 @@ class Volunteer_Opportunity:
         """
 
     def setInterest(self, interest=Volunteer()):
+        """
+        setInterest _summary_
+
+        Args:
+            interest (_type_, optional): _description_. Defaults to Volunteer().
+        """
         self.__interest.append(interest)
 
     def getInterest(self):
+        """
+        getInterest _summary_
+
+        Returns:
+            _type_: _description_
+        """
         data = ""
         for obj in self.__interest:
             data += "\t" + str(obj) + "\n"
         return data
 
     def updateTaskStatus(self, task=Task(), status=""):
+        """
+        updateTaskStatus _summary_
+
+        Args:
+            task (_type_, optional): _description_. Defaults to Task().
+            status (str, optional): _description_. Defaults to "".
+
+        Returns:
+            _type_: _description_
+        """
         if task in self.__tasks:
             if status == "Completed":
                 for vol in self.__assignedVolunteers:
@@ -343,6 +421,12 @@ class Volunteer_Opportunity:
             return f"{task}, is not assigned to this opportunity"
 
     def registerInterest(self, vol=Volunteer()):
+        """
+        registerInterest _summary_
+
+        Args:
+            vol (_type_, optional): _description_. Defaults to Volunteer().
+        """
         self.__interest.append(vol)
 
     def __str__(self):
@@ -353,7 +437,7 @@ class Organization_Representative(User):
     """
     Child class of User, with attributes including user Id.
     """
-
+    
     organizersRecord = []
 
     def __init__(
@@ -403,13 +487,33 @@ class Organization:
     def createOpportunity(
         self, title, date, startingTime, endingTime, location  # update this function
     ):
+        """
+        createOpportunity _summary_
 
+        Args:
+            title (_type_): _description_
+            date (_type_): _description_
+            startingTime (_type_): _description_
+            endingTime (_type_): _description_
+            location (_type_): _description_
+        """
+        
         opportunity = Volunteer_Opportunity(
             title, date, startingTime, endingTime, location
         )
         self.__opportunities.append(opportunity)
 
     def deleteOpportunity(self, opportunityCode):
+        """
+        deleteOpportunity _summary_
+
+        Args:
+            opportunityCode (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        
         try:
             for op in self.__opportunities:
                 if op.getOpportunityCode() == opportunityCode:
@@ -418,15 +522,33 @@ class Organization:
             return f"Failed to delete {self.__organization_name}"
 
     def getOpportunities(self):
+        """
+        getOpportunities _summary_
+
+        Returns:
+            _type_: _description_
+        """
         data = "⎨Opportunities\n"
         for obj in self.__opportunities:
             data += "\t" + str(obj) + "\n"
         return data
 
     def setRepresentatives(self, rep=Organization_Representative()):
+        """
+        setRepresentatives _summary_
+
+        Args:
+            rep (_type_, optional): _description_. Defaults to Organization_Representative().
+        """
         self.__representatives.append(rep)
 
     def getRepresentatives(self):
+        """
+        getRepresentatives _summary_
+
+        Returns:
+            _type_: _description_
+        """
         data = ""
         for op in self.__representatives:
             data += "\t" + str(op) + "\n"
@@ -441,6 +563,21 @@ class Organization:
     def addOpportunityToOrg(
         orgCode, otitle, odate, ostartingTime, oendingTime, olocation
     ):
+        """
+        addOpportunityToOrg _summary_
+
+        Args:
+            orgCode (_type_): _description_
+            otitle (_type_): _description_
+            odate (_type_): _description_
+            ostartingTime (_type_): _description_
+            oendingTime (_type_): _description_
+            olocation (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        
         orgName = ""
 
         for org in Organization.organizationRecord:
@@ -456,8 +593,8 @@ class Organization:
 
 class Certificate:
     """
-          Certificate class with attributes including certificate ID, volunteer name, and issue date
-    ."""
+    Certificate class with attributes including certificate ID, volunteer name, and issue date
+    """
 
     today = datetime.now()
     year = str(today.year)
@@ -507,9 +644,21 @@ class Administrator(User):
     def getUserID(self):
         return self.__userID
 
-    def registerOrganizations(self, name, code, description):
+    def registerOrganizations(self, name, description, code):
+        """
+        registerOrganizations _summary_
+
+        Args:
+            name (_type_): _description_
+            description (_type_): _description_
+            code (_type_): _description_
+
+
+        Returns:
+            _type_: _description_
+        """
         try:
-            org = Organization(name, code, description)
+            org = Organization(name, description, code)
             return f"Organization registered"
         except:
             return f"Failed to register organization"
@@ -517,13 +666,32 @@ class Administrator(User):
     def assignRepresentative(
         self, org=Organization(), rep=Organization_Representative()
     ):
+        """
+        assignRepresentative _summary_
+
+        Args:
+            org (_type_, optional): _description_. Defaults to Organization().
+            rep (_type_, optional): _description_. Defaults to Organization_Representative().
+
+        Returns:
+            _type_: _description_
+        """
         if org:
             org.setRepresentatives(rep)
         else:
             return f"Invalid Entry"
 
     def generateCertificate(self, certificate=Certificate(), vol=Volunteer()):
+        """
+        generateCertificate _summary_
 
+        Args:
+            certificate (_type_, optional): _description_. Defaults to Certificate().
+            vol (_type_, optional): _description_. Defaults to Volunteer().
+
+        Returns:
+            _type_: _description_
+        """
         certificate.setVolunteer(vol)
         toPrint = f"====  -Certificate-  ====\n\tCID: {certificate.getCertificateID()}\n\tVolunteer: {self.getFullName()}\n\tIssue Date: {certificate.getIssueDate()}"
 
