@@ -5,7 +5,6 @@ from datetime import datetime, date
 
 """
 
-
 class Task:
     """
     Task class that contains attributes including task number,title, required skills, credit hours, number of volunteers, and status.
@@ -71,6 +70,12 @@ class Task:
     # Exception Handling, task number not found!!!
 
     def getStatus(self):
+        """
+        getStatus _summary_
+
+        Returns:
+            _type_: _description_
+        """
         return self.__status
 
     # Exception Handling, task number not found!!!
@@ -696,3 +701,4 @@ class Administrator(User):
         toPrint = f"====  -Certificate-  ====\n\tCID: {certificate.getCertificateID()}\n\tVolunteer: {self.getFullName()}\n\tIssue Date: {certificate.getIssueDate()}"
 
         return toPrint
+
