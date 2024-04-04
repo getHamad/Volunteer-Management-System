@@ -358,7 +358,7 @@ class Volunteer_Opportunity:
     def getTasks(self):
         return self.__tasks
 
-    def addToAssignedVolunteers(self, volunteer=Volunteer()):
+    def addToAssignedVolunteers(self,volunteer=Volunteer()):
         """
         addToAssignedVolunteers _summary_
 

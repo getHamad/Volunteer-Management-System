@@ -23,6 +23,8 @@ Local_Festival_Volunteer = Task(
 Iftar_Preparation = Task(
     "Iftar Preparation Assistance", "Cooking Skills,Teamwork", 4, 20)
 
+
+
 # 10 Volunteers
 Ahmed_Hamad = Volunteer(
     "Ahmed Hamad Naser", "0501221844", "ahmed@zu.ac.ae", "PhD", date(2020, 4, 12), date(2000, 2, 2), "Team Work, Communication")
@@ -44,8 +46,10 @@ Omar_AlFahim = Volunteer(
     "Omar AlFahim", "0509001122", "omar@zu.ac.ae", "Master's", date(2022, 4, 19), date(1997, 6, 22), "Customer Service,Adaptability")
 Mariam_AlSayed = Volunteer(
     "Mariam AlSayed", "0500112233", "mariam@zu.ac.ae", "PhD", date(2019, 9, 9), date(1996, 11, 11), "Cooking Skills,Teamwork")
+
+
 # 6 Representatives
-Khalid_AlMazroui = Organization_Representative(
+Khalid_Alzaabi = Organization_Representative(
     "Khalid Al Mazroui", "0501234567", "khalid.alm@org.ae", "Master's", date(2023, 1, 10), date(1985, 5, 25))
 Saeed_AlZaabi = Organization_Representative(
     "Saeed Al Zaabi", "0502345678", "saeed.alz@org.ae", "Bachelor", date(2022, 2, 20), date(1987, 8, 15))
@@ -57,17 +61,72 @@ Mariam_AlHashimi = Organization_Representative(
     "Mariam Al Hashimi", "0505678901", "mariam.alh@org.ae", "Master's", date(2020, 5, 25), date(1986, 4, 30))
 Fatima_AlKetbi = Organization_Representative(
     "Fatima Al Ketbi", "0506789012", "fatima.alk@org.ae", "Bachelor", date(2019, 6, 10), date(1989, 9, 10))
-# 5 Organizations 
+
+
+# 5 Organizations
+Emirates_Red_Crescent = Organization(
+    "Emirates Red Crescent",
+    "A volunteer organization that plays a leading role in humanitarian work at both local and international levels.",
+    100)
+Beit_Al_Khair_Society = Organization(
+    "Beit Al Khair Society",
+    "Focuses on providing support to the needy within the UAE community, including food distribution and financial aid.",
+    201)
+Dubai_Cares = Organization(
+    "Dubai Cares",
+    "Part of Mohammed bin Rashid Al Maktoum Global Initiatives, it aims to improve children's access to quality primary education in developing countries.",
+    307)
+Emirates_Environmental_Group = Organization(
+    "Emirates Environmental Group",
+    "A professional working group devoted to protecting the environment through the means of education, action programs, and community involvement.",
+    404)
+Emirates_Animal_Welfare_Society = Organization(
+    "Emirates Animal Welfare Society",
+    "Dedicated to the welfare of animals and works to improve public awareness about the importance of animal welfare and protection.",
+    512)
+
 
     # 15 Opportunities (3 in each)
 
+ERC_Food_Distribution = Volunteer_Opportunity("Ramadan Food Distribution", date(2024, 4, 1), "Morning", "Afternoon", "Abu Dhabi")
+ERC_Tutoring = Volunteer_Opportunity("Youth Tutoring and Education", date(2024, 9, 15), "Afternoon", "Evening", "Dubai")
+ERC_Disaster_Recovery = Volunteer_Opportunity("Disaster Recovery and Support", date(2024, 11, 10), "Noon", "Evening", "Sharjah")
+
+
+BAK_Food_Pantry_Organization = Volunteer_Opportunity("Food Pantry Organization", date(2024, 5, 25), "Morning", "Noon", "Ajman")
+BAK_Eid_Meal_Preparation = Volunteer_Opportunity("Eid Meal Preparation", date(2024, 4, 20), "Morning", "Afternoon", "Ras Al Khaimah")
+BAK_Community_Gardening = Volunteer_Opportunity("Community Gardening Initiative", date(2024, 3, 15), "Morning", "Noon", "Fujairah")
+
+
+DC_Tutoring_Support = Volunteer_Opportunity("Academic Tutoring Support", date(2024, 10, 30), "Morning", "Afternoon", "Dubai")
+DC_School_Supplies_Drive = Volunteer_Opportunity("School Supplies Drive", date(2024, 8, 25), "Morning", "Noon", "Al Ain")
+DC_Educational_Workshops = Volunteer_Opportunity("Educational Workshops for Children", date(2024, 7, 20), "Afternoon", "Evening", "Abu Dhabi")
+
+
+EEG_Beach_Cleanup = Volunteer_Opportunity("Beach and Coastal Cleanup", date(2024, 6, 15), "Morning", "Noon", "Dubai")
+EEG_Tree_Planting = Volunteer_Opportunity("Community Tree Planting Day", date(2024, 12, 30), "Morning", "Afternoon", "Sharjah")
+EEG_Environmental_Awareness = Volunteer_Opportunity("Environmental Awareness Campaign", date(2024, 11, 5), "Noon", "Afternoon", "Ajman")
+
+
+EAWS_Pet_Adoption_Day = Volunteer_Opportunity("Pet Adoption and Care Day", date(2024, 2, 10), "Morning", "Afternoon", "Dubai")
+EAWS_Animal_Shelter_Support = Volunteer_Opportunity("Animal Shelter Support", date(2024, 1, 5), "Noon", "Evening", "Ras Al Khaimah")
+EAWS_Wildlife_Conservation = Volunteer_Opportunity("Wildlife Conservation Efforts", date(2024, 3, 25), "Morning", "Noon", "Umm Al Quwain")
+
 # 3 Admins
+Khalid_Al_Futtaim = Administrator(
+    "Khalid Al Futtaim", "0501234567", "khalid.alfuttaim@admin.com", "Master's", date(2023, 1, 10), date(1985, 5, 25))
+
+Sara_Al_Zaabi = Administrator(
+    "Sara Al Zaabi", "0502345678", "sara.alzaabi@admin.com", "PhD", date(2022, 2, 20), date(1983, 8, 15))
+
+Omar_Al_Suwaidi = Administrator(
+    "Omar Al Suwaidi", "0503456789", "omar.alsuwaidi@admin.com", "Bachelor", date(2024, 3, 15), date(1987, 12, 1))
 
 
 
 
-
-
+for obj in Volunteer.volunteerRecord:
+    print(obj, "\n")
 
 
 """# I NEED THIS

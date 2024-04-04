@@ -6,13 +6,15 @@ currentUser = []
 """
 Account creation functions    
 """
+
+
 def createVolAccount():
     while True:
         print(" ")
         print("⎧ Volunteer Management System")
         print("⎩ Authorization ➢ Create a Volunteer Account")
         print("  ")
-        
+
         print("- Enter the following information to register as a Volunteer")
         try:
             fullname = str(input("Full name ‣ "))
@@ -28,15 +30,15 @@ def createVolAccount():
         except:
             print("Invalid Request: something went wrong, try again later.")
         else:
-                volunteer = Volunteer(
-                    fullname, mobile, email, educationLevel, DOJ, DOB, skills
-                )
-                currentUser.append(volunteer)
-                print("Your account has been created successfully!")
-                # append the user ????
+            volunteer = Volunteer(
+                fullname, mobile, email, educationLevel, DOJ, DOB, skills
+            )
+            currentUser.append(volunteer)
+            print("Your account has been created successfully!")
+            # append the user ????
         finally:
             print("Returning to Previous Menu...")
-                
+
         break
 
 
@@ -44,72 +46,69 @@ def login():
     """
     login is going to contain the login of volunteer, representative, and administrator
     """
-    
+
     while True:
-    
+
         print(" ")
         print("⎧ Volunteer Management System")
         print("⎩      Authorization ➢ Login       ")
         print("  ")
-        
+
         print("- Enter the following information to login")
         try:
             user_id = str(input("Username ‣ "))
-            userActualID= user_id.strip(user_id[0])
+            userActualID = user_id.strip(user_id[5:-1])
             x = ""
             if user_id.startswith('V'):
                 for volunteer in Volunteer.volunteerRecord:
-                    if volunteer.getUserID() == userActualID:
+                    if volunteer.getUserID() == user_id:
                         currentUser.append(volunteer)
                         x = "V"
                     print(x, volunteer)
             elif user_id.startswith('O'):
                 for organizer in Organization_Representative.organizersRecord:
-                    if organizer.getUserID() == userActualID:
+                    if organizer.getUserID() == user_id:
                         currentUser.append(organizer)
                         x = "O"
                 print(x)
             elif user_id.startswith('A'):
                 for admin in Administrator.administratorsRecord:
-                    if admin.getUserID() == userActualID:
+                    if admin.getUserID() == user_id:
                         currentUser.append(admin)
                         x = "A"
                 print(x)
             else:
                 print("Invalid ID")
-                
+
         except:
             print("Invalid Request: something went wrong, try again later.")
         else:
             print(x)
 
 
-    
-    
 def startPanel():
-    
     while True:
         print(" ")
         print("⎧ Volunteer Management System")
         print("⎩      Authorization       ")
         print("  ")
-        
+
         print("- Select your login method\n")
         print("1 • Existing Account")
         print("2 • Create Volunteer Account")
-        print("3 • Return to Previous Menu")
-        
+        print("3 • Exit")
+
         try:
             userInput = int(input("Login method ‣ "))
         except:
             print("Invalid Input: your input must be a number in range of 1 - 2")
-    
+
         try:
             if userInput == 1:
                 login()
             elif userInput == 2:
                 createVolAccount()
-            elif userInput == 3: 
+            elif userInput == 3:
                 break
             else:
                 raise Exception
@@ -117,82 +116,75 @@ def startPanel():
             print("Error")
         finally:
             print("Returning to Previous Menu...")
-            
 
-VOL1 = Volunteer("awdawdad", "234234234", "dwadadaw", "wadadad", date(2001, 12, 12), date.today(), "awdawd,dawd")
-print(VOL1.getUserID())
+
+vvv = Volunteer("awdawdad", "234234234", "dwadadaw", "wadadad", date(2001, 12, 12), date.today(), "awdawd,dawd")
+print(vvv.getUserID())
 startPanel()
 
 """
     Volunteer Functions & Panel
 """
+
+
 def viewOpportunities():
     pass
+
 
 def viewAssignedTasks():
     pass
 
+
 def viewCompletedTasks():
     pass
+
 
 def viewVolunteeringHours():
     pass
 
 
-
-
 def volunteerPanel():
     pass
+
 
 """
     Representative Functions & Panel
 """
+
+def controlVolunteerOppor():
+    pass
+
+def assignVolunteerToTask():
+    pass
+
+def updateTaskStatus():
+    pass
+
 def representativePanel():
     pass
+
 
 """
     Administrators Functions & Panel
 """
+
+def registerOrganization():
+    pass
+
+def assignRepresentative():
+    pass
+
+
+def createCertificate():
+    pass
+
+
 def administratorPanel():
     pass
-    
 
 
 
 
-
-
-
-
-
-
-
-def login():
-    """
-    login is going to contain the login of volunteer, representative, and administrator
-    """
-    pass    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 def system():
     # While the function is called print the options and ask the user to select from 1-6
     while True:
@@ -225,6 +217,5 @@ def system():
             break
         else:
             print("Invalid input, please select an option between 1 and 6 ..")
-
 
 #
