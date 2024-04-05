@@ -71,15 +71,30 @@ class Task:
 
     def getStatus(self):
         """
-        getStatus _summary_
+        getStatus: this function returns the status of the task either "Newly added" or "Completed"
 
         Returns:
-            _type_: _description_
+            str: the function returns a string data type
         """
         return self.__status
 
     # Exception Handling, task number not found!!!
 
+    def getTasks():
+        """
+        getTasks: this function returns a list of tasks that are already registered in the system
+
+        Returns:
+            str: the output will be "string" to print the full detail of the task as in __str__ function
+        """
+        data = ""
+        for obj in Task.tasksRecord:
+            if obj.getTitle() == "":
+                pass
+            else:
+                data += "\t" + str(obj) + "\n"
+        return data
+    
     def __str__(self):
         return f"Task No: {self.__taskNo}\nTitle: {self.__title}\nSkills: {self.__requiredSkills}\nCredit Hours: {self.__creditHour}\nVolunteers Needed: {self.__numOfVolunteersNeeded}\nStatus: {self.__status}\n===================="
 
@@ -121,8 +136,8 @@ class User:
     def setUserID(self, id):
         self.__userID = id
 
-    def getUserID(self):
-        return self.__userID
+    #def getUserID(self):
+        #  return self.__userID
 
     def setFullName(self, name):
         self.__fullName = name
@@ -144,19 +159,20 @@ class User:
 
     def setEducationLevel(self, level):
         """
-        setEducationLevel _summary_
+        setEducationLevel: this function allows to edit the current education level of a user
+        to a new one
 
         Args:
-            level (_type_): _description_
+            str: the new education level
         """
         self.__educationLevel = level
 
     def getEducationLevel(self):
         """
-        getEducationLevel _summary_
+        getEducationLevel: this function returns the current education level of the user
 
         Returns:
-            _type_: _description_
+            str: the current education level of the user
         """
         return self.__educationLevel
 
@@ -173,8 +189,8 @@ class User:
         return self.__DOJ
 
         """
-            Global functions 
-            """
+        Global functions 
+        """
 
     def __str__(self):
         return f"User ID: {self.__userID}\nName: {self.__fullName}\nMobile: {self.__mobile}\nEamil: {self.__email}\nEducation Level: {self.__educationLevel}\nDate of Birth: {self.__DOB}\nDate of Join: {self.__DOJ}"
@@ -217,6 +233,7 @@ class Volunteer(User):
         self.__skills = skills.split(",")
 
     def getSkills(self):
+        
         data = ""
         for skill in self.__skills:
             data += "\t" + str(skill) + "\n"
@@ -227,26 +244,31 @@ class Volunteer(User):
 
     def getTasks(self):
         """
-        getTasks _summary_
+        getTasks: this function returns the tasks assigned to a volunteer
 
         Returns:
-            _type_: _description_
+            list: the list contains the tasks that the volunteer should accomplished
         """
         data = ""
         for obj in self.__tasks:
-            data += "\t" + str(obj) + "\n"
+            if obj.getTitle() == "":
+                pass
+            else:
+                data += "\t" + str(obj) + "\n"
         return data
 
     def setTotalVolunteerHours(self, sign="", amount=0):
         """
-        setTotalVolunteerHours _summary_
+        setTotalVolunteerHours: this function adds the volunteering hour of a task to the total volunteering hour of the 
+        user
 
         Args:
-            sign (str, optional): _description_. Defaults to "".
-            amount (int, optional): _description_. Defaults to 0.
+            sign (str): the sign specifies if the amount will be added or subtracted form the total volunteering 
+            hours. Defaults to "".
+            amount (int): the amount is the number of hours to add or subtract to the total volunteering hour. Defaults to 0.
 
         Returns:
-            _type_: _description_
+           int : the new total volunteering hours after adding or subtracting
         """
         if sign == "+":
             self.__totalVolunteeringHrs += amount
@@ -257,10 +279,11 @@ class Volunteer(User):
 
     def addCompletedTasks(self, task=Task()):  
         """
-        addCompletedTasks _summary_
+        addCompletedTasks: this function appends an existing task in the assigned task to the completed tasks list.
+        the function changes the status of the task to be 'completed' and removes the task from the assigned tasks.
 
         Args:
-            task (_type_, optional): _description_. Defaults to Task().
+            task (object, Task()): this represents an object of the Task class. Defaults to Task().
         """
         task.updateStatus("Completed")
         self.setTotalVolunteerHours("+", task.getCreditHour())
@@ -278,7 +301,7 @@ class Volunteer(User):
         """
     def getAllVolunteers():
         """
-        getAllVolunteers returns all existing volunteers in the system
+        getAllVolunteers: returns all existing volunteers in the system
 
         Returns:
             String: returns a string of volunteer information
@@ -360,10 +383,11 @@ class Volunteer_Opportunity:
 
     def addToAssignedVolunteers(self,volunteer=Volunteer()):
         """
-        addToAssignedVolunteers _summary_
+        addToAssignedVolunteers: this function adds a volunteer to a list of assigned volunteers.
 
         Args:
-            volunteer (_type_, optional): _description_. Defaults to Volunteer().
+            volunteer (object, Volunteer()): this takes a volunteer from interest list and append it to assigned volunteer list by removing
+            the volunteer from the interest list. Defaults to Volunteer().
         """
         if volunteer in self.__interest:
             self.__interest.remove(volunteer)
@@ -385,31 +409,29 @@ class Volunteer_Opportunity:
 
     def setInterest(self, interest=Volunteer()):
         """
-        setInterest _summary_
+        setInterest: this function adds a volunteer to the list of interested volunteers
 
         Args:
-            interest (_type_, optional): _description_. Defaults to Volunteer().
+            interest (object, Volunteer()): this object refers to an object in the Volunteer class. Defaults to Volunteer().
         """
         self.__interest.append(interest)
 
     def getInterest(self):
         """
-        getInterest _summary_
+        getInterest: this funcion provides a list of interested volunteers
 
         Returns:
-            _type_: _description_
+            list: this list contains all volunteers willing to take the opportunity
         """
-        data = ""
-        for obj in self.__interest:
-            data += "\t" + str(obj) + "\n"
-        return data
+        return self.__interest
 
     def updateTaskStatus(self, task=Task(), status=""):
         """
-        updateTaskStatus _summary_
+        updateTaskStatus: this function updates the status by taking two attributes. The task itself and the
+        new status for that task
 
         Args:
-            task (_type_, optional): _description_. Defaults to Task().
+            task (object, Task()): the task refers to an object in the T. Defaults to Task().
             status (str, optional): _description_. Defaults to "".
 
         Returns:
@@ -435,7 +457,7 @@ class Volunteer_Opportunity:
         self.__interest.append(vol)
 
     def __str__(self):
-        return f"⎛ Title: {self.getTitle()} ⎞\n⎡ Date: {self.getDate()}\n├ Location: {self.getLocation()}\n├ Starting Time: {self.getStartingTime()}\n⎣ End Time: {self.getEndTime()}"
+        return f"⎡ Code: {self.__opportunityCode}\n├ Title: {self.getTitle()}\n├ Date: {self.getDate()}\n├ Location: {self.getLocation()}\n├ Starting Time: {self.getStartingTime()}\n⎣ End Time: {self.getEndTime()}"
 
 
 class Organization_Representative(User):
@@ -457,6 +479,7 @@ class Organization_Representative(User):
 
     def getUserID(self):
         return self.__userID
+    
 
 
 class Organization:
@@ -533,10 +556,7 @@ class Organization:
         Returns:
             _type_: _description_
         """
-        data = "⎨Opportunities\n"
-        for obj in self.__opportunities:
-            data += "\t" + str(obj) + "\n"
-        return data
+        return self.__opportunities
 
     def setRepresentatives(self, rep=Organization_Representative()):
         """
@@ -594,6 +614,9 @@ class Organization:
             else:
                 return f"Invalid Organization Code"
         return f"Opportunity has been added to {orgName} successfully"
+    
+    def __str__(self) -> str:
+        return f"Organization name: {self.__organization_name}"
 
 
 class Certificate:
