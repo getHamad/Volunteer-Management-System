@@ -249,13 +249,7 @@ class Volunteer(User):
         Returns:
             list: the list contains the tasks that the volunteer should accomplished
         """
-        data = ""
-        for obj in self.__tasks:
-            if obj.getTitle() == "":
-                pass
-            else:
-                data += "\t" + str(obj) + "\n"
-        return data
+        return self.__tasks
 
     def setTotalVolunteerHours(self, sign="", amount=0):
         """
@@ -268,7 +262,7 @@ class Volunteer(User):
             amount (int): the amount is the number of hours to add or subtract to the total volunteering hour. Defaults to 0.
 
         Returns:
-           int : the new total volunteering hours after adding or subtracting
+            int : the new total volunteering hours after adding or subtracting
         """
         if sign == "+":
             self.__totalVolunteeringHrs += amount
@@ -615,6 +609,14 @@ class Organization:
                 return f"Invalid Organization Code"
         return f"Opportunity has been added to {orgName} successfully"
     
+    def addTaskToOpportunity(self, task = Task(), opportunityCode = 0):
+        for opportunity in self.getOpportunities():
+            if opportunity.getOpportunityCode() == opportunityCode:
+                opportunity.addTask(task)
+                return f"successful"
+            else: 
+                continue
+        return f"Error"
     def __str__(self) -> str:
         return f"Organization name: {self.__organization_name}"
 

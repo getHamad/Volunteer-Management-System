@@ -6,6 +6,7 @@ from datetime import datetime, date
 Handling Logged-in User
 """
 currentUser = []
+
 def getLoggedUser():
     
     x = object()
@@ -32,16 +33,28 @@ def viewOpportunities():
             for obj in Organization.organizationRecord:
                 print(f"\t{obj.getOrganizationName()}\n\tOrganization\nOrganization Code: {obj.getOrgCode()}\n-\n{obj.getDescription()}\n")
         except:
-            print("Error: couldn't find organizations\nReturning to the previous page..")
+            print("T Function Error: please try again later..\nReturning to the previous page..") # : couldn't find organizations
             break
         else:
             pass
 
 
         try:
-                userInput = str(input("Organization Code ‣ "))
-        except:
-                print("Invalid Input: your input must be an organization code.. e.x. 'O201'")
+                userInput = str(input("Would you like to view a specific organization opportunities? ‣ "))
+        except Exception:
+                print("Invalid Input: your input must either be a 'Yes' or 'No'")
+        else: 
+            userInLower = userInput.lower()
+            if userInLower == "yes":
+                try:
+                    userInput = str(input("Enter Organization Code ‣ "))
+                except:
+                    print("Invalid Input: your input must be an organization code.. e.x. 'O201'")
+            elif userInLower == "no":
+                print("Alright..\nReturning to the previous page..") 
+                break
+            else: 
+                raise Exception
 
         
         
@@ -56,10 +69,8 @@ def viewOpportunities():
                     print(f"- The following the offered opportunities by {obj.getOrganizationName()}\n")
                     for opportunity in obj.getOpportunities():
                         print(opportunity, "\n")
-                
-            
         except: 
-            print("Error: couldn't find opportunities\nReturning to the previous page..")
+            print("T Function Error: please try again later..\nReturning to the previous page..") # Error: couldn't find opportunities
             break
         
         try:
@@ -78,18 +89,20 @@ def viewOpportunities():
                     print("Invalid Input: your input must be an opportunity code.. e.x. '20'")
                     
             elif userInLower == "no":
-                print("Returning to the previous page..")
+                print("Returning to the main page..")
                 break 
             else:
                 raise Exception
         except Exception:
-            print("Invalid Answer\nReturning to the previous page..")
+            print("Invalid Answer: please try again\nReturning to the previous page..")
             break
         else:
             for obj in currentOrganization:
                 for opportunity in obj.getOpportunities():
                     if opportunity.getOpportunityCode() == userInput:
                         opportunity.setInterest(getLoggedUser())
+                        # remove later 
+                        opportunity.addToAssignedVolunteers(getLoggedUser())
                         currentOrganization.clear()
                         print("You have been registered successfully\nReturning to the previous page..")
                         break
@@ -97,7 +110,30 @@ def viewOpportunities():
         
         
 def viewAssignedTasks():
-    pass
+    while True:
+        print(" ")
+        print("⎧\tVolunteer Management System")
+        print(f"⎩\tVolunteer Panel ➢ View Assigned Volunteering Tasks")
+        print("  ")
+
+        
+        try:
+            for obj in currentUser:
+                tasks = obj.getTasks()
+                if len(tasks) == 0:
+                    print("- You are not assigned to any tasks at the moment")
+                else:
+                    print("- The following are your assigned tasks\n")
+                    for task in obj.getTasks():
+                        print(task) # Formate the task printing
+        except:
+            print("T Function Error: please try again later..") # write the exception and what to do
+        else:
+            userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
+            if userInput: 
+                break
+            
+
 
 
 def viewCompletedTasks():
@@ -131,6 +167,8 @@ def volunteerPanel():
         try:
             if userInput == 1:
                 viewOpportunities()
+            elif userInput == 2:
+                viewAssignedTasks()
             elif userInput == 5:
                 currentUser.clear()
                 print("Logged-out\nReturning to the Authorization page..")
@@ -138,7 +176,7 @@ def volunteerPanel():
             else:
                 raise Exception
         except Exception:
-            print("Error: panel error")
+            print("S Panel Error: please try again later..")
             
         
 

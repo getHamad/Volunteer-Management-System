@@ -152,16 +152,18 @@ class Save:
         Emirates_Animal_Welfare_Society.createOpportunity("Animal Shelter Support", date(2024, 1, 5), "Noon", "Evening", "Ras Al Khaimah")
         Emirates_Animal_Welfare_Society.createOpportunity("Disaster Recovery and Support", date(2024, 11, 10), "Noon", "Evening", "Sharjah")
         
-
         
-        return f"Done" 
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Food_Distribution, 30)
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Tutoring, 30)
+
+        x = Emirates_Animal_Welfare_Society.getOpportunities()
+        return f"Done, {x}" 
 
 
-
-for obj in Volunteer.volunteerRecord:
+"""for obj in Volunteer.volunteerRecord:
     print(obj, "\n")
 
-print(Task.getTasks())
+print(Task.getTasks())"""
 
 """# I NEED THIS
 # adding a task
