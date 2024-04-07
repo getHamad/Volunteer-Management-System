@@ -253,7 +253,7 @@ def createVolunteeringOpportunity(): # standalone
                 raise Exception
             
         except Exception:
-            print("T Function Error: Couldn't find an organization")
+            print("T Function Error: Couldn't find any organizations related to you")
             
         else:
             
@@ -264,14 +264,14 @@ def createVolunteeringOpportunity(): # standalone
                 print("  ")
 
                 print("- Enter the following information\n")
-                
+                # opportunity title
                 title = str(input("Title ‣ "))
-                
+                # to create a date
                 year = int(input("Date - Year ‣ "))
                 month = int(input("Date - Month ‣ "))
                 day = int(input("Date - Day ‣ "))
                 date = date(year, month, day)
-                
+                # other opportunity requirements
                 startingTime = str(input("Starting time ‣ "))
                 endingTime = str(input("Ending time ‣ "))
                 location = str(input("Location ‣ "))
@@ -301,7 +301,56 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
 
 
 def deleteVolunteeringOpportunity():
-    pass
+    while True:
+                print(" ")
+                print("⎧ Volunteer Management System")
+                print("⎩ Organization Representative Panel ➢ Delete Volunteering Opportunity")
+                print("  ")
+
+
+                try: 
+                    
+                    organization = getOrganization()
+                    
+                    if len(organization) == 0:
+                        raise Exception
+                    
+                except Exception:
+                    print("T Function Error: Couldn't find any organizations related to you")
+                    
+                else:
+                    
+                    try:
+                        
+                        print("- Choose from the following list the opportunity that you wish to delete\n")
+                        
+                        for Org in organization:
+                            for Opportunity in Org.getOpportunities():
+                                print(Opportunity, "\n")
+                            
+                    except:
+                        print("T Function Error: Couldn't find any opportunities related your organization")
+                    else:
+                        
+                        try:
+                            userInput = int(input("Enter opportunity code ‣ "))
+                        except:
+                            print("Invalid Input: your input must be an opportunity code.. e.x. '20'")
+                        else:
+                            
+                            print("Loading..")
+                            
+                            for Org in organization:
+                                for Opportunity in Org.getOpportunities():
+                                    if Opportunity.getOpportunityCode() == userInput:
+                                        del Opportunity
+                                    else:
+                                        continue
+                            
+                            print("Opportunity has deleted successfully")
+                finally:
+                    print("Returning to the previous page..")
+                    break        
 
 def representativePanel(): # S PANEL
     while True:
@@ -324,7 +373,7 @@ def representativePanel(): # S PANEL
             
         try:
             if userInput == 1:
-                viewOpportunities()
+                createVolunteeringOpportunity()
             elif userInput == 4:
                 currentUser.clear()
                 print("Logged-out\nReturning to the Authorization page..")

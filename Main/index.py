@@ -458,6 +458,10 @@ class Volunteer_Opportunity:
         """
         self.__interest.append(vol)
 
+    def __del__(self):
+        className = self.__class__.__name__
+        return f"{className}, has been destroyed"
+    
     def __str__(self):
         return f"⎡ Code: {self.__opportunityCode}\n├ Title: {self.getTitle()}\n├ Date: {self.getDate()}\n├ Location: {self.getLocation()}\n├ Starting Time: {self.getStartingTime()}\n⎣ End Time: {self.getEndTime()}"
 
