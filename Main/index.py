@@ -285,6 +285,12 @@ class Volunteer(User):
         self.__tasks.remove(task)
 
     def getCompletedTasks(self):
+        """
+        getCompletedTasks _summary_
+
+        Returns:
+            _type_: _description_
+        """
         return self.__completedTasks
 
     def getTotalVolunteerHours(self):
@@ -386,9 +392,11 @@ class Volunteer_Opportunity:
         if volunteer in self.__interest:
             self.__interest.remove(volunteer)
             self.__assignedVolunteers.append(volunteer)
-
-        for task in self.__tasks:
-            volunteer.addTask(task)
+            for task in self.__tasks:
+                volunteer.addTask(task)
+        else:
+            return f"Invalid Request: {volunteer} has not been in interest list"
+        
 
     def getAssignedVolunteers(self):
         
@@ -431,13 +439,13 @@ class Volunteer_Opportunity:
         Returns:
             _type_: _description_
         """
+        lowerStatus = status.lower()
         if task in self.__tasks:
-            if status == "Completed":
+            if lowerStatus == "completed":
                 for vol in self.__assignedVolunteers:
                     vol.addCompletedTasks(task)
             else:
                 task.updateStatus(status)
-                return f"task has been updated"
         else:
             return f"{task}, is not assigned to this opportunity"
 
@@ -581,7 +589,7 @@ class Organization:
 
     def addOpportunityToOrg(
         orgCode, otitle, odate, ostartingTime, oendingTime, olocation
-    ):
+    ) -> str:
         """
         addOpportunityToOrg _summary_
 
@@ -613,10 +621,18 @@ class Organization:
         for opportunity in self.getOpportunities():
             if opportunity.getOpportunityCode() == opportunityCode:
                 opportunity.addTask(task)
-                return f"successful"
             else: 
                 continue
-        return f"Error"
+    
+    def updateTaskStatus(self, opportunityCode = int, task = Task(), status = str )-> str:
+        for opportunity in self.getOpportunities():
+            if opportunity.getOpportunityCode() == opportunityCode:
+                return opportunity.updateTaskStatus(task, status)
+            else:
+                continue
+        else: 
+            return f"Opportunity not found, try again later.."
+            
     def __str__(self) -> str:
         return f"Organization name: {self.__organization_name}"
 

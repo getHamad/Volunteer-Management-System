@@ -156,8 +156,8 @@ class Save:
         Emirates_Animal_Welfare_Society.addTaskToOpportunity(Food_Distribution, 30)
         Emirates_Animal_Welfare_Society.addTaskToOpportunity(Tutoring, 30)
 
-        x = Emirates_Animal_Welfare_Society.getOpportunities()
-        return f"Done, {x}" 
+        
+        return f"Done" 
 
 
 """for obj in Volunteer.volunteerRecord:
