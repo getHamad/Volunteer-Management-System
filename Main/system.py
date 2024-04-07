@@ -101,16 +101,13 @@ def viewOpportunities():
                                         
                                         currentOrganization.clear()
                                         print("You have been registered your interest successfully\nReturning to the previous page..")
-                                        break     
+                                        break
                             
             elif userInLower == "no":
                 print("Alright..\nReturning to the previous page..") 
                 break
             
             
-            
-        
-        
 def viewAssignedTasks():
     while True:
         print(" ")
@@ -165,8 +162,26 @@ def viewCompletedTasks():
 
 
 def viewVolunteeringHours():
-    pass
-
+    while True:
+        print(" ")
+        print("⎧\tVolunteer Management System")
+        print(f"⎩\tVolunteer Panel ➢ View Completed Volunteering Hours")
+        print("  ")
+        
+        try:
+            for obj in currentUser:
+                completedHours = obj.getTotalVolunteerHours()
+                if completedHours == 0:
+                    print("You haven't gained any volunteering credits yes, try again later")
+                else:
+                    print(f"You have completed {completedHours} volunteering hours")
+        except:
+            print("T Function Error: please try again later..") # write the exception and what to do
+        else:
+            userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
+            if userInput: 
+                print("Returning to the previous page..")
+                break        
 
 def volunteerPanel():
     while True:
@@ -195,6 +210,8 @@ def volunteerPanel():
                 viewAssignedTasks()
             elif userInput == 3:
                 viewCompletedTasks()
+            elif userInput == 4:
+                viewVolunteeringHours()
             elif userInput == 5:
                 currentUser.clear()
                 print("Logged-out\nReturning to the Authorization page..")
@@ -211,17 +228,111 @@ def volunteerPanel():
     Representative Functions & Panel
 """
 
-def controlVolunteerOppor():
+def getOrganization(): # 
+    organizationProfile = []
+    try:
+        for Org in Organization.organizationRecord:
+            for Rep in Org.getRepresentatives():
+                if Rep == getLoggedUser():
+                    organizationProfile.append(Org)
+                else:
+                    continue
+    except:
+        print("T Function Error: Organization not found")
+    else:
+        return organizationProfile # print all the controls
+
+
+def createVolunteeringOpportunity(): # standalone
+    while True:
+        try: 
+            
+            organization = getOrganization()
+            
+            if len(organization) == 0:
+                raise Exception
+            
+        except Exception:
+            print("T Function Error: Couldn't find an organization")
+            
+        else:
+            
+            try:
+                print(" ")
+                print("⎧ Volunteer Management System")
+                print("⎩ Organization Representative Panel ➢ Create Volunteering Opportunity")
+                print("  ")
+
+                print("- Enter the following information\n")
+                
+                title = str(input("Title ‣ "))
+                
+                year = int(input("Date - Year ‣ "))
+                month = int(input("Date - Month ‣ "))
+                day = int(input("Date - Day ‣ "))
+                date = date(year, month, day)
+                
+                startingTime = str(input("Starting time ‣ "))
+                endingTime = str(input("Ending time ‣ "))
+                location = str(input("Location ‣ "))
+                
+                print("Loading..")
+                
+                for Org in organization:
+                    newOpportunity = Org.createOpportunity(
+                        title, date, startingTime, endingTime, location
+                    )
+                
+            except:
+                print("T Function Error: Couldn't create an opportunity")
+            else:
+                print("The requested opportunity has been created successfully\n-\n\tOpportunity details\n\t-")
+                print(newOpportunity, "\n")
+                
+        finally:
+            print("Returning to the previous page..")
+            break
+
+def function():
     pass
 
-def assignVolunteerToTask():
+def updateVolunteeringOpportunity(): # look at it later (is it logical??)
     pass
 
-def updateTaskStatus():
+
+def deleteVolunteeringOpportunity():
     pass
 
-def representativePanel():
-    pass
+def representativePanel(): # S PANEL
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Organization Representative Panel")
+        print("  ")
+
+        print("- The following are your controls as a organizer\n")
+        print("1 • Create Volunteering Opportunity")
+        print("2 • Update Volunteering Opportunity")
+        print("3 • Delete Volunteering Opportunity")
+        print("4 • Logout")
+        
+        try:
+            userInput = int(input("Navigate to ‣ "))
+            # add if statement for out of range numbers
+        except:
+            print("Invalid Input: your input must be a number in range of 1 - 5")
+            
+        try:
+            if userInput == 1:
+                viewOpportunities()
+            elif userInput == 4:
+                currentUser.clear()
+                print("Logged-out\nReturning to the Authorization page..")
+                break
+            else:
+                raise Exception
+        except Exception:
+            print("S Panel Error: please try again later..")
 
 
 """
@@ -272,19 +383,21 @@ def createVolAccount():
         except:
             print("Invalid Request: something went wrong, try again later.")
         else:
-            volunteer = Volunteer(
+            try:
+                volunteer = Volunteer(
                 fullname, mobile, email, educationLevel, DOJ, DOB, skills
             )
-            currentUser.append(volunteer)
-            print("Your account has been created successfully!")
-            for obj in currentUser:
-                print(obj)
-            # append the user ????
-        finally:
-            print("Redirecting you to volunteer panel..")
-
-        break # Should be replaced to redirect the volunteer to his panel
-
+                currentUser.append(volunteer)
+                print("Your account has been created successfully!")
+                for obj in currentUser:
+                    print(obj)
+                for vol in Volunteer.volunteerRecord: # remove 
+                    print(vol)
+            except:
+                print("Invalid Request: something went wrong, try again later.")    
+            else:
+                print("Redirecting you to volunteer panel..")
+                volunteerPanel()
 
 
 
@@ -398,9 +511,6 @@ def system():
 for obj in currentUser:
     print(obj, "\n")
     
-"""w = Save()
-print(w.load())"""
-
 for obj in Organization_Representative.organizersRecord:
     print(obj)
 for obj in Volunteer.volunteerRecord:

@@ -576,10 +576,7 @@ class Organization:
         Returns:
             _type_: _description_
         """
-        data = ""
-        for op in self.__representatives:
-            data += "\t" + str(op) + "\n"
-        return data
+        return self.__representatives
 
     def setOrgCode(self, code):
         self.__organizationCode = code
