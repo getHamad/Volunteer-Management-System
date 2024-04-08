@@ -93,32 +93,6 @@ class Save:
             512)
 
 
-            # 15 Opportunities (3 in each)
-
-        ERC_Food_Distribution = Volunteer_Opportunity("Ramadan Food Distribution", date(2024, 4, 1), "Morning", "Afternoon", "Abu Dhabi")
-        ERC_Tutoring = Volunteer_Opportunity("Youth Tutoring and Education", date(2024, 9, 15), "Afternoon", "Evening", "Dubai")
-        ERC_Disaster_Recovery = Volunteer_Opportunity("Disaster Recovery and Support", date(2024, 11, 10), "Noon", "Evening", "Sharjah")
-
-
-        BAK_Food_Pantry_Organization = Volunteer_Opportunity("Food Pantry Organization", date(2024, 5, 25), "Morning", "Noon", "Ajman")
-        BAK_Eid_Meal_Preparation = Volunteer_Opportunity("Eid Meal Preparation", date(2024, 4, 20), "Morning", "Afternoon", "Ras Al Khaimah")
-        BAK_Community_Gardening = Volunteer_Opportunity("Community Gardening Initiative", date(2024, 3, 15), "Morning", "Noon", "Fujairah")
-
-
-        DC_Tutoring_Support = Volunteer_Opportunity("Academic Tutoring Support", date(2024, 10, 30), "Morning", "Afternoon", "Dubai")
-        DC_School_Supplies_Drive = Volunteer_Opportunity("School Supplies Drive", date(2024, 8, 25), "Morning", "Noon", "Al Ain")
-        DC_Educational_Workshops = Volunteer_Opportunity("Educational Workshops for Children", date(2024, 7, 20), "Afternoon", "Evening", "Abu Dhabi")
-
-
-        EEG_Beach_Cleanup = Volunteer_Opportunity("Beach and Coastal Cleanup", date(2024, 6, 15), "Morning", "Noon", "Dubai")
-        EEG_Tree_Planting = Volunteer_Opportunity("Community Tree Planting Day", date(2024, 12, 30), "Morning", "Afternoon", "Sharjah")
-        EEG_Environmental_Awareness = Volunteer_Opportunity("Environmental Awareness Campaign", date(2024, 11, 5), "Noon", "Afternoon", "Ajman")
-
-
-        EAWS_Pet_Adoption_Day = Volunteer_Opportunity("Pet Adoption and Care Day", date(2024, 2, 10), "Morning", "Afternoon", "Dubai")
-        EAWS_Animal_Shelter_Support = Volunteer_Opportunity("Animal Shelter Support", date(2024, 1, 5), "Noon", "Evening", "Ras Al Khaimah")
-        EAWS_Wildlife_Conservation = Volunteer_Opportunity("Wildlife Conservation Efforts", date(2024, 3, 25), "Morning", "Noon", "Umm Al Quwain")
-
         # 3 Admins
         Khalid_Al_Futtaim = Administrator(
             "Khalid Al Futtaim", "0501234567", "khalid.alfuttaim@admin.com", "Master's", date(2023, 1, 10), date(1985, 5, 25))
@@ -154,12 +128,85 @@ class Save:
         
         
         """
+        add task to opportunity
         ....
         """
         Emirates_Animal_Welfare_Society.addTaskToOpportunity(Food_Distribution, 30)
         Emirates_Animal_Welfare_Society.addTaskToOpportunity(Tutoring, 30)
-        
+
+        Emirates_Environmental_Group.addTaskToOpportunity(Enviromental_Cleanup,10)
+        Emirates_Environmental_Group.addTaskToOpportunity(Disaster_Response,10)
+
+        Dubai_Cares.addTaskToOpportunity(Animal_Shelter,7)
+        Dubai_Cares.addTaskToOpportunity(Health_Awareness_Campaigns,7)
+
+        Beit_Al_Khair_Society.addTaskToOpportunity(Building_Homes,4)
+        Beit_Al_Khair_Society.addTaskToOpportunity(Community_Gardening,4)
+
+        Emirates_Red_Crescent.addTaskToOpportunity(Local_Festival_Volunteer,1)
+        Emirates_Red_Crescent.addTaskToOpportunity(Iftar_Preparation,1)
+
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Food_Distribution,2)
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Tutoring,2)
+
+        Emirates_Environmental_Group.addTaskToOpportunity(Enviromental_Cleanup,3)
+        Emirates_Environmental_Group.addTaskToOpportunity(Animal_Shelter,3)
+
+        Dubai_Cares.addTaskToOpportunity(Iftar_Preparation,5)
+        Dubai_Cares.addTaskToOpportunity(Community_Gardening,5)
+
+        Beit_Al_Khair_Society.addTaskToOpportunity(Disaster_Response,6)
+        Beit_Al_Khair_Society.addTaskToOpportunity(Building_Homes,6)
+
+        Emirates_Red_Crescent.addTaskToOpportunity(Animal_Shelter,8)
+        Emirates_Red_Crescent.addTaskToOpportunity(Local_Festival_Volunteer,8)
+
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Community_Gardening,9)
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Health_Awareness_Campaigns,9)
+
+        Emirates_Environmental_Group.addTaskToOpportunity(Disaster_Response,11)
+        Emirates_Environmental_Group.addTaskToOpportunity(Tutoring,11)
+
+        Dubai_Cares.addTaskToOpportunity(Local_Festival_Volunteer,12)
+        Dubai_Cares.addTaskToOpportunity(Health_Awareness_Campaigns,12)
+
+        Beit_Al_Khair_Society.addTaskToOpportunity(Building_Homes,13)
+        Beit_Al_Khair_Society.addTaskToOpportunity(Animal_Shelter,13)
+
+        Dubai_Cares.addTaskToOpportunity(Iftar_Preparation,14)
+        Dubai_Cares.addTaskToOpportunity(Tutoring,14)
+
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Local_Festival_Volunteer,15)
+        Emirates_Animal_Welfare_Society.addTaskToOpportunity(Enviromental_Cleanup,15)
+
+
+        #Emirates-Red-Crescent O100 - Opportunitiy codes - 1 , 2 , 3
+        #Beit-Al-Khair-Society O201 - Opportunity codes - 4 , 5 , 6
+        #Dubai-Cares O307 - Opportunity codes - 7 , 8 , 9
+        #Emirates-Enviromental-Group - O404 - Opportunity codes - 10 , 11 , 12
+        #Emirates-Animal-Walfare-Society - O512 - Opportunity codes - 13, 14, 15
+
+    
         """
+        add representatives to all organizations
+    
+        ....
+        """
+        Emirates_Red_Crescent.setRepresentatives(Khalid_Alzaabi)
+        Beit_Al_Khair_Society.setRepresentatives(Saeed_AlZaabi)
+        Dubai_Cares.setRepresentatives(Noora_AlAhbabi)
+        Emirates_Animal_Welfare_Society.setRepresentatives(Ahmed_AlFahim)
+        Emirates_Environmental_Group.setRepresentatives(Fatima_AlKetbi)
+        Emirates_Red_Crescent.setRepresentatives(Mariam_AlHashimi)
+
+
+
+
+
+
+
+        """
+        
         ....
         """
 

@@ -481,8 +481,10 @@ def login():
                 for organizer in Organization_Representative.organizersRecord:
                     if organizer.getUserID() == user_id:
                         currentUser.append(organizer)
+                        representativePanel()
                         x = "O"
-                print(x)
+                for y in currentUser: 
+                    print(y)
                 break
             elif user_id.startswith('A'):
                 for admin in Administrator.administratorsRecord:
