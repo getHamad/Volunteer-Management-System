@@ -325,7 +325,7 @@ class Volunteer_Opportunity:
 
     randomCounter = 0
 
-    def __init__(self, title, date, startingTime, endingTime, location) -> None:
+    def __init__(self, title=str, date=date, startingTime=str, endingTime= str, location=str) -> None:
         Volunteer_Opportunity.randomCounter += 1
         self.__opportunityCode = Volunteer_Opportunity.randomCounter
         self.__title = title
@@ -457,7 +457,6 @@ class Volunteer_Opportunity:
             vol (_type_, optional): _description_. Defaults to Volunteer().
         """
         self.__interest.append(vol)
-
     def __del__(self):
         className = self.__class__.__name__
         return f"{className}, has been destroyed"
@@ -547,13 +546,10 @@ class Organization:
         Returns:
             _type_: _description_
         """
-        
-        try:
-            for op in self.__opportunities:
-                if op.getOpportunityCode() == opportunityCode:
-                    del op
-        except:
-            return f"Failed to delete {self.__organization_name}"
+        for op in self.__opportunities:
+            if op.getOpportunityCode() == opportunityCode:
+                self.__opportunities.remove(op)
+
 
     def getOpportunities(self):
         """

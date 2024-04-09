@@ -267,10 +267,10 @@ def createVolunteeringOpportunity(): # standalone
                 # opportunity title
                 title = str(input("Title ‣ "))
                 # to create a date
-                year = int(input("Date - Year ‣ "))
-                month = int(input("Date - Month ‣ "))
-                day = int(input("Date - Day ‣ "))
-                date = date(year, month, day)
+                yearx = int(input("Date - Year ‣ "))
+                monthx = int(input("Date - Month ‣ "))
+                dayx = int(input("Date - Day ‣ "))
+                datetoIn = date(yearx, monthx, dayx)
                 # other opportunity requirements
                 startingTime = str(input("Starting time ‣ "))
                 endingTime = str(input("Ending time ‣ "))
@@ -280,7 +280,7 @@ def createVolunteeringOpportunity(): # standalone
                 
                 for Org in organization:
                     newOpportunity = Org.createOpportunity(
-                        title, date, startingTime, endingTime, location
+                        title, datetoIn, startingTime, endingTime, location
                     )
                 
             except:
@@ -333,21 +333,33 @@ def deleteVolunteeringOpportunity():
                     else:
                         
                         try:
-                            userInput = int(input("Enter opportunity code ‣ "))
-                        except:
-                            print("Invalid Input: your input must be an opportunity code.. e.x. '20'")
+                            userInput = str(input("Are you sure? ‣ "))
+                            
+                            if userInput.lower() == "no":
+                                break
+                            
+                        except Exception:
+                            print("Invalid Input: your input must a 'Yes' or 'No'")
                         else:
                             
-                            print("Loading..")
+                            if userInput.lower() == "yes":
+                                try:
+                                    userInput = int(input("Enter opportunity code ‣ "))
+                                except:
+                                    print("Invalid Input: your input must be an opportunity code.. e.x. '20'")
+                                else:
+                                    
+                                    print("Loading..")
+                                    
+                                    for Org in organization:
+                                        for Opportunity in Org.getOpportunities():
+                                            if Opportunity.getOpportunityCode() == userInput:
+                                                Org.deleteOpportunity(userInput)
+                                                print("Opportunity has deleted successfully")
+                            else:
+                                raise Exception
+                                        
                             
-                            for Org in organization:
-                                for Opportunity in Org.getOpportunities():
-                                    if Opportunity.getOpportunityCode() == userInput:
-                                        del Opportunity
-                                    else:
-                                        continue
-                            
-                            print("Opportunity has deleted successfully")
                 finally:
                     print("Returning to the previous page..")
                     break        
@@ -374,6 +386,10 @@ def representativePanel(): # S PANEL
         try:
             if userInput == 1:
                 createVolunteeringOpportunity()
+            elif userInput == 2:
+                print("This option is under-maintenance, try again later..")
+            elif userInput == 3:
+                deleteVolunteeringOpportunity()
             elif userInput == 4:
                 currentUser.clear()
                 print("Logged-out\nReturning to the Authorization page..")
@@ -522,7 +538,7 @@ def system():
         print("4 • Exit")
 
         try:
-            options = [1,2,3,4]
+            options = [1,2,3,4,0]
             userInput = int(input("Login method ‣ "))
             if userInput not in options:
                 raise Exception
@@ -547,6 +563,11 @@ def system():
                 elif userInput == 4:
                     for obj in currentUser:
                         print(obj)
+                elif userInput == 0:
+                    for org in Organization.organizationRecord:
+                        for rep in org.getRepresentatives():
+                            print(rep)
+                        
                 else:
                     raise Exception
             except Exception:
