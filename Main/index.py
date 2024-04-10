@@ -678,7 +678,7 @@ class Administrator(User):
     ) -> None:
         super().__init__(fullname, mobile, email, educationLevel, DOJ, DOB)
         self.__userID = "A" + str(self._User__userID)
-
+        Administrator.administratorsRecord.append(self)
         # getters & setters
 
     def setUserID(self, inID):
@@ -739,4 +739,7 @@ class Administrator(User):
         toPrint = f"====  -Certificate-  ====\n\tCID: {certificate.getCertificateID()}\n\tVolunteer: {self.getFullName()}\n\tIssue Date: {certificate.getIssueDate()}"
 
         return toPrint
+    
+    def __str__(self):
+        return super().__str__()
 

@@ -60,8 +60,15 @@ def viewOpportunities():
                                 print("  ")
                                 currentOrganization.append(obj)
                                 print(f"- The following the offered opportunities by {obj.getOrganizationName()}\n")
-                                for opportunity in obj.getOpportunities():
-                                    print(opportunity, "\n")
+                                
+                                # Filtering to output the right message to the user in-case there was 0 opportunities in an organization
+                                if len(obj.getOpportunities()) == 0:
+                                    print()
+                                    break
+                                else:
+                                    for opportunity in obj.getOpportunities():
+                                        print(opportunity, "\n")
+                                        
                     except: 
                         print("T Function Error: please try again later..\nReturning to the previous page..") # Error: couldn't find opportunities
                         break
@@ -396,6 +403,7 @@ def representativePanel(): # S PANEL
                 break
             else:
                 raise Exception
+            
         except Exception:
             print("S Panel Error: please try again later..")
 
@@ -405,18 +413,95 @@ def representativePanel(): # S PANEL
 """
 
 def registerOrganization():
-    pass
-
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Administrator Panel ➢ Register New Organization")
+        print("  ")
+        
+        try:
+            userInput = str(input("Are you sure? ‣ "))
+            if userInput.lower() == 'no':
+                break
+            elif userInput.lower() == 'yes':
+                print("Sure")
+            else:
+                raise Exception
+        except Exception:
+            print("Invalid Input: your input must be a 'Yes' or 'No'")
+        else:
+        
+            try:
+                print("- Enter the following information\n")
+                orgName = str(input("Organization name ‣ "))
+                orgDescription = str(input("Organization description ‣ "))
+                orgCode = int(input("Organization code 'will be altered' ‣ "))
+                orgCode += len(Organization.organizationRecord)
+                print("\nLoading..\n")
+            except:
+                print("T Function Error: invalid input..")
+            
+            else:
+                
+                try:
+                    new_organization = Organization(
+                        orgName, orgDescription, orgCode
+                        )
+                    print("Organization has been created successfully..")
+                except:
+                    print("T Function Error: unable to create the requested organization")
+                else:
+                    print(new_organization)
+            
+            
+        finally:
+            print("Returning to the previous page..")
+            break
 def assignRepresentative():
     pass
-
 
 def createCertificate():
     pass
 
-
 def administratorPanel():
-    pass
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Administrator Panel")
+        print("  ")
+
+        print("- The following are your controls as an administrator\n")
+        print("1 • Register New Organization")
+        print("2 • Assign a Representative to an Organization")
+        print("3 • Create Volunteer Certificate")
+        print("4 • Get System Statistics")
+        print("5 • Logout")        
+        
+        try:
+            userInput = int(input("Navigate to ‣ "))
+            # add if statement for out of range numbers
+        except:
+            print("Invalid Input: your input must be a number in range of 1 - 5")
+            
+        try:
+            if userInput == 1:
+                registerOrganization()
+            elif userInput == 2:
+                print("This option is under-maintenance, try again later..")
+            elif userInput == 3:
+                print("This option is under-maintenance, try again later..")
+            elif userInput == 4:
+                print("This option is under-maintenance, try again later..")
+            elif userInput == 5:
+                currentUser.clear()
+                print("Logged-out\nReturning to the Authorization page..")
+                break
+            else:
+                raise Exception
+            
+        except Exception:
+            print("S Panel Error: please try again later..")        
+        
 
 
 
@@ -506,6 +591,7 @@ def login():
                 for admin in Administrator.administratorsRecord:
                     if admin.getUserID() == user_id:
                         currentUser.append(admin)
+                        administratorPanel()
                         x = "A"
                 print(x)
                 break
@@ -538,7 +624,7 @@ def system():
         print("4 • Exit")
 
         try:
-            options = [1,2,3,4,0]
+            options = [1,2,3,4,0,9]
             userInput = int(input("Login method ‣ "))
             if userInput not in options:
                 raise Exception
@@ -567,6 +653,9 @@ def system():
                     for org in Organization.organizationRecord:
                         for rep in org.getRepresentatives():
                             print(rep)
+                elif userInput == 9:
+                    for admin in Administrator.administratorsRecord:
+                        print(admin)
                         
                 else:
                     raise Exception
