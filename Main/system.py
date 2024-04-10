@@ -424,7 +424,7 @@ def registerOrganization():
             if userInput.lower() == 'no':
                 break
             elif userInput.lower() == 'yes':
-                print("Sure")
+                print(" ")
             else:
                 raise Exception
         except Exception:
@@ -458,11 +458,103 @@ def registerOrganization():
             print("Returning to the previous page..")
             break
 def assignRepresentative():
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Administrator Panel ➢ Assign a Representative to an Organization")
+        print("  ")
+        
+        try:
+            userInput = str(input("Are you sure? ‣ "))
+            if userInput.lower() == 'no':
+                break
+            elif userInput.lower() == 'yes':
+                print(" ")
+            else:
+                raise Exception
+        except Exception:
+            print("Invalid Input: your input must be a 'Yes' or 'No'")
+        else:
+            
+            try:
+                print("- Select one of the following organizations\n")
+                for Org in Organization.organizationRecord:
+                    if Org.getDescription() == "":
+                        continue
+                    else:
+                        print(Org, "\n")
+            except:
+                print("T Function Error: unable to access organizations")
+            else:
+                
+                try:
+                    userInput = str(input("Organization code ‣ "))
+                except:
+                    print("Invalid Input: your input must start with 'O' then the organization code")
+                else:
+                    
+                    try:
+                        selectedOrg = []
+                        print("Loading..")
+                        for Org in Organization.organizationRecord:
+                            if Org.getOrgCode() == userInput:
+                                selectedOrg.append(Org)
+                                print("Organization accessed..")
+                            else:
+                                continue
+                    except:
+                        print("T Function Error: unable to find the requested organization")
+                    else:
+                        
+                        try:
+                            print("- Select one of the following representatives\n")
+                            for Rep in Organization_Representative.organizersRecord:
+                                if Rep.getFullName() == "":
+                                    continue
+                                else:
+                                    print(Rep, "\n")
+                        except:
+                            print("T Function Error: unable to access representatives")
+                        else:
+                            
+                            try:
+                                userInput = str(input("Representative ID ‣ O"))
+                            except:
+                                print("Invalid Input: your input must start with 'O' then the representative id")
+                            else:                        
+                                
+                                try:
+                                    print("Loading..")
+                                    selectedRep = []
+                                    for Rep in Organization_Representative.organizersRecord:
+                                        if Rep.getRepID() == ("O" + userInput):
+                                            selectedRep.append(Rep)
+                                            print("Representative accessed..")
+                                        else: 
+                                            continue
+                                except:
+                                    print("T Function Error:  unable to find the requested representative")
+                                else:
+                                    
+                                    try:
+                                        print("Loading..")
+                                        for Org in selectedOrg:
+                                            for Rep in selectedRep:
+                                                Org.setRepresentative(Rep)
+                                    except:
+                                        print("T Function Error: unable to process your request")
+                                    else:
+                                        print("Your request has been processed successfully..")
+                    
+                    
+        finally:
+            print("Returning to the previous page..")
+            break
+def generateCertificate():
     pass
 
-def createCertificate():
+def generateStatistics():
     pass
-
 def administratorPanel():
     while True:
         print(" ")
@@ -487,7 +579,7 @@ def administratorPanel():
             if userInput == 1:
                 registerOrganization()
             elif userInput == 2:
-                print("This option is under-maintenance, try again later..")
+                assignRepresentative()
             elif userInput == 3:
                 print("This option is under-maintenance, try again later..")
             elif userInput == 4:

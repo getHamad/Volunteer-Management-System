@@ -192,12 +192,12 @@ class Save:
     
         ....
         """
-        Emirates_Red_Crescent.setRepresentatives(Khalid_Alzaabi)
-        Beit_Al_Khair_Society.setRepresentatives(Saeed_AlZaabi)
-        Dubai_Cares.setRepresentatives(Noora_AlAhbabi)
-        Emirates_Animal_Welfare_Society.setRepresentatives(Ahmed_AlFahim)
-        Emirates_Environmental_Group.setRepresentatives(Fatima_AlKetbi)
-        Emirates_Red_Crescent.setRepresentatives(Mariam_AlHashimi)
+        Emirates_Red_Crescent.setRepresentative(Khalid_Alzaabi)
+        Beit_Al_Khair_Society.setRepresentative(Saeed_AlZaabi)
+        Dubai_Cares.setRepresentative(Noora_AlAhbabi)
+        Emirates_Animal_Welfare_Society.setRepresentative(Ahmed_AlFahim)
+        Emirates_Environmental_Group.setRepresentative(Fatima_AlKetbi)
+        Emirates_Red_Crescent.setRepresentative(Mariam_AlHashimi)
 
 
 

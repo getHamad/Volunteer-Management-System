@@ -136,8 +136,8 @@ class User:
     def setUserID(self, id):
         self.__userID = id
 
-    #def getUserID(self):
-        #  return self.__userID
+    def getUserID(self):
+        return self.__userID
 
     def setFullName(self, name):
         self.__fullName = name
@@ -481,9 +481,15 @@ class Organization_Representative(User):
         Organization_Representative.organizersRecord.append(self)
 
         # getters & setters
-
-    def getUserID(self):
+    
+    def getDOB(self):
+        return super().getDOB()
+    
+    def getRepID(self):
         return self.__userID
+    
+    def __str__(self):
+        return f"{super().__str__()} id {self.getRepID()}"
     
 
 
@@ -560,7 +566,7 @@ class Organization:
         """
         return self.__opportunities
 
-    def setRepresentatives(self, rep=Organization_Representative()):
+    def setRepresentative(self, rep=Organization_Representative()):
         """
         setRepresentatives _summary_
 
@@ -631,7 +637,7 @@ class Organization:
             return f"Opportunity not found, try again later.."
             
     def __str__(self) -> str:
-        return f"Organization name: {self.__organization_name}"
+        return f"Organization code: {self.getOrgCode()}\nOrganization name: {self.__organization_name}"
 
 
 class Certificate:
