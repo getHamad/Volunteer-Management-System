@@ -529,7 +529,7 @@ def assignRepresentative():
                                     for Rep in Organization_Representative.organizersRecord:
                                         if Rep.getRepID() == ("O" + userInput):
                                             selectedRep.append(Rep)
-                                            print("Representative accessed..")
+                                            print("Representative found..")
                                         else: 
                                             continue
                                 except:
@@ -550,11 +550,67 @@ def assignRepresentative():
         finally:
             print("Returning to the previous page..")
             break
+        
 def generateCertificate():
-    pass
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Administrator Panel ➢ Generate Certificate")
+        print("  ")
+        print("- Enter the following information\n")
+        
+        volunteerPointer = []
+        
+        try:
+            userInput = input("Volunteer code ‣ V")
+        except:
+            print("Invalid Input: your input needs to be an integer")
+        else:
+            userInput = "V" + str(userInput)
+            
+            
+            try:
+                print("Loading..")
+                for volunteer in Volunteer.volunteerRecord:
+                    if volunteer.getUserID() == userInput:
+                        volunteerPointer.append(volunteer)
+                        print("Volunteer found..")
+                    else:
+                        continue
+            except:
+                print("T Function Error: unable to access volunteer")
+            else:
+                print("Gathering volunteer details..")
+                vName = ""
+                vCredits = 0
+                cIssueDate = date.today()
+                try:
+                    for volunteer in volunteerPointer:
+                        vName = str(volunteer.getFullName())
+                        vCredits = int(volunteer.getTotalVolunteerHours())
+                except:
+                    print(f"T Function Error: processing failure")
+                else:
+                    print("Creating certificate..\n")
+                    
+                    try:                    
+                        print("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯")
+                        print(f"\t\t\t\t {vName}\n")
+                        print(f"\tThis certificate is awarded to the mentioned volunteer in appreciation \n\t     of their invaluable volunteer services and contributions\n\n\t Your selfless dedication, hard work, and generosity have made a \n\t    significant impact, and we are grateful for your support.\n")
+                        print("\t  Volunteering Hours\t\t\t\tIssue Date")
+                        print(f"\t\t⎯⎯⎯⎯\t\t\t\t\t   ⎯⎯⎯⎯")
+                        print(f"\t\t  {vCredits}\t\t\t\t\t{cIssueDate}")
+                        print("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n")
+                    except:
+                        print("T Function Error: failed to print certificate") 
+                        
+        finally:        
+            print("Returning to the previous page..")
+            break
 
 def generateStatistics():
     pass
+
 def administratorPanel():
     while True:
         print(" ")
@@ -565,7 +621,7 @@ def administratorPanel():
         print("- The following are your controls as an administrator\n")
         print("1 • Register New Organization")
         print("2 • Assign a Representative to an Organization")
-        print("3 • Create Volunteer Certificate")
+        print("3 • Generate Volunteer Certificate")
         print("4 • Get System Statistics")
         print("5 • Logout")        
         
@@ -581,7 +637,7 @@ def administratorPanel():
             elif userInput == 2:
                 assignRepresentative()
             elif userInput == 3:
-                print("This option is under-maintenance, try again later..")
+                generateCertificate()
             elif userInput == 4:
                 print("This option is under-maintenance, try again later..")
             elif userInput == 5:
@@ -716,7 +772,7 @@ def system():
         print("4 • Exit")
 
         try:
-            options = [1,2,3,4,0,9]
+            options = [1,2,3,4,0,8,9]
             userInput = int(input("Login method ‣ "))
             if userInput not in options:
                 raise Exception
@@ -748,7 +804,9 @@ def system():
                 elif userInput == 9:
                     for admin in Administrator.administratorsRecord:
                         print(admin)
-                        
+                elif userInput == 8:
+                    for vol in Volunteer.volunteerRecord:
+                        print(vol)        
                 else:
                     raise Exception
             except Exception:

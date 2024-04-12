@@ -221,8 +221,7 @@ class Volunteer(User):
         self.__totalVolunteeringHrs = 0
         Volunteer.volunteerRecord.append(self)
 
-        # getters & setters
-
+        # getters & setters     
     def setUserID(self, inID):
         self.__userID = inID
 
@@ -270,7 +269,10 @@ class Volunteer(User):
             self.__totalVolunteeringHrs -= amount
         else:
             return f"Error, check your inputs again"
-
+        
+    def getTotalVolunteerHours(self):
+        return self.__totalVolunteeringHrs
+    
     def addCompletedTasks(self, task=Task()):  
         """
         addCompletedTasks: this function appends an existing task in the assigned task to the completed tasks list.
