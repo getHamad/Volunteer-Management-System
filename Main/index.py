@@ -502,7 +502,7 @@ class Organization:
 
     organizationRecord = []
 
-    def __init__(self, organization_name=" ", description="", orgCode=0) -> None:
+    def __init__(self, organization_name="", description="", orgCode=0) -> None:
         self.__organization_name = organization_name.replace(" ", "-")
         self.__organizationCode = "O" + str(orgCode)
         self.__description = description

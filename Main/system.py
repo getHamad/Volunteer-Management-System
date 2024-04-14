@@ -3,8 +3,9 @@ from saves import Save
 from datetime import datetime, date
 
 """
-Handling Logged-in User
+    Handling Logged-in User
 """
+
 currentUser = []
 
 def getLoggedUser():
@@ -12,7 +13,20 @@ def getLoggedUser():
     x = object()
     for user in currentUser:
         x = user
+        
     return x
+
+"""
+    Activity logging
+"""
+# logins activity
+system_logins = 0
+system_f_logins = 0
+system_s_logins = 0
+# new users, and opportunities view requests
+system_op_views = 0
+system_new_users = 0
+
 
 """
     Volunteer Functions & Panel
@@ -45,12 +59,14 @@ def viewOpportunities():
         except Exception:
                 print("Invalid Input: your input must either be a 'Yes' or 'No'")
         else: 
+            
             if userInLower == "yes":
                 try:
                     userInput = str(input("Enter Organization Code ‣ "))
                 except:
                     print("Invalid Input: your input must be an organization code.. e.x. 'O201'")
-                else:    
+                else:   
+                    
                     try:
                         for obj in Organization.organizationRecord:
                             if obj.getOrgCode() == userInput:
@@ -63,9 +79,10 @@ def viewOpportunities():
                                 
                                 # Filtering to output the right message to the user in-case there was 0 opportunities in an organization
                                 if len(obj.getOpportunities()) == 0:
-                                    print()
+                                    print("")
                                     break
                                 else:
+                                    #system_op_views += 1
                                     for opportunity in obj.getOpportunities():
                                         print(opportunity, "\n")
                                         
@@ -609,7 +626,94 @@ def generateCertificate():
             break
 
 def generateStatistics():
-    pass
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Administrator Panel ➢ System Statistics")
+        print("  ")
+        
+        admins = 0
+        representatives = 0
+        volunteers = 0
+        
+        t_tasks = 0
+        
+        organizations = 0
+        opportunities = 0
+        
+        
+        
+        try:
+            # USER STATS
+            try:
+                print("Loading volunteers..")
+                for vol in Volunteer.volunteerRecord:
+                    if vol.getFullName() == "":
+                        continue
+                    else:
+                        volunteers += 1
+                print("Loading representatives..")                        
+                for rep in Organization_Representative.organizersRecord:
+                    if rep.getFullName() == "":
+                        continue
+                    else:
+                        representatives += 1
+                print("Loading administrators..")                        
+                for adm in Administrator.administratorsRecord:
+                    if adm.getFullName() == "":
+                        continue
+                    else:
+                        admins += 1
+            except:
+                print("T Function Error: failure in processing users")
+            else:
+                # TASKS STATS
+                try:
+                    print("Loading tasks..")
+                    for task in Task.tasksRecord:
+                        if task.getTitle() == "":
+                            continue
+                        else:
+                            t_tasks += 1
+                except:
+                    print("T Function Error: failure in processing tasks")
+                else:
+                    # ORGANIZATIONS STATS
+                    try:
+                        print("Loading organizations & opportunities..")
+                        for org in Organization.organizationRecord:
+                            if org.getOrganizationName() == "":
+                                continue
+                            else:
+                                organizations += 1
+                                for op in org.getOpportunities():                        
+                                    if op.getTitle() == "":
+                                        continue
+                                    else:
+                                        opportunities += 1
+                    except:
+                        print("T Function Error: failure in processing organizations & opportunities")
+                    else:
+                        # SYSTEM STATS           
+                        try:
+                            print("Loading final report..")
+                            users_text = f"\n\t⎝ USERS STATISTICS ⎠\n \nVolunteers: {volunteers}\nOrganization Representatives: {representatives}\nAdministrators: {admins}\nTotal of Users: {(volunteers+representatives+admins)}\n"
+                            task_text = f"\n\t⎝ TASKS STATISTICS ⎠\n \nTasks: {t_tasks}\n"
+                            org_text = f"\n\t⎝ ORGANIZATIONS STATISTICS ⎠\n\nOrganizations: {organizations}\nOpportunities: {opportunities}\n"
+                            system_text = f"\n\t⎝ SYSTEM STATISTICS ⎠\n \nSuccessful Logins: {system_s_logins}\nFailed Logins: {system_f_logins}\nTotal Login Attempts: {system_logins}\n\t-\nOpportunities View Requests: {system_op_views}\nTotal New Volunteers: {system_new_users}\n"
+                            print(users_text, task_text, org_text, system_text)
+                        except:
+                            print("T Function Error: failure in final processing")
+                        else:
+                            print(" ")             
+            
+        except:
+            print("S Panel Error: try again later")
+        else:
+            pass # MAY ADD "DO YOU WANT TO EXIT THIS PAGE?" TO GIVE THEM A CHANCE TO VIEW DATA
+        finally:
+            print("Returning to the previous page..")
+            break
 
 def administratorPanel():
     while True:
@@ -639,7 +743,7 @@ def administratorPanel():
             elif userInput == 3:
                 generateCertificate()
             elif userInput == 4:
-                print("This option is under-maintenance, try again later..")
+                generateStatistics()
             elif userInput == 5:
                 currentUser.clear()
                 print("Logged-out\nReturning to the Authorization page..")
@@ -694,6 +798,7 @@ def createVolAccount():
             except:
                 print("Invalid Request: something went wrong, try again later.")    
             else:
+                #system_new_users += 1
                 print("Redirecting you to volunteer panel..")
                 volunteerPanel()
 
@@ -712,6 +817,8 @@ def login():
         print("  ")
 
         print("- Enter the following information to login")
+        #system_logins += 1
+
         try:
             user_id = str(input("Username ‣ "))
             #userActualID = user_id.strip(user_id[5:-1])
@@ -722,6 +829,7 @@ def login():
                 for volunteer in Volunteer.volunteerRecord:
                     if volunteer.getUserID() == user_id :
                         currentUser.append(volunteer)
+                        #system_s_logins += 1
                         volunteerPanel()
                         x = "V"
                 for y in currentUser:
@@ -729,6 +837,7 @@ def login():
             elif user_id.startswith('O'):
                 for organizer in Organization_Representative.organizersRecord:
                     if organizer.getUserID() == user_id:
+                        #system_s_logins += 1
                         currentUser.append(organizer)
                         representativePanel()
                         x = "O"
@@ -738,6 +847,7 @@ def login():
             elif user_id.startswith('A'):
                 for admin in Administrator.administratorsRecord:
                     if admin.getUserID() == user_id:
+                        #system_s_logins += 1
                         currentUser.append(admin)
                         administratorPanel()
                         x = "A"
@@ -780,7 +890,7 @@ def system():
             print("Invalid Input: your input must be a number in range of 1 - 2")
         else:
             try:
-                if userInput == 1:
+                if userInput == 1: 
                     login()
                 elif userInput == 2:
                     createVolAccount()
