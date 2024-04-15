@@ -82,7 +82,8 @@ def viewOpportunities():
                                     print("")
                                     break
                                 else:
-                                    #system_op_views += 1
+                                    global system_op_views
+                                    system_op_views += 1
                                     for opportunity in obj.getOpportunities():
                                         print(opportunity, "\n")
                                         
@@ -310,18 +311,176 @@ def createVolunteeringOpportunity(): # standalone
             except:
                 print("T Function Error: Couldn't create an opportunity")
             else:
-                print("The requested opportunity has been created successfully\n-\n\tOpportunity details\n\t-")
-                print(newOpportunity, "\n")
+                print("The requested opportunity has been created successfully")
                 
         finally:
             print("Returning to the previous page..")
             break
 
-def function():
-    pass
 
 def updateVolunteeringOpportunity(): # look at it later (is it logical??)
-    pass
+    while True:
+        print(" ")
+        print("⎧ Volunteer Management System")
+        print("⎩ Organization Representative Panel ➢ Update Volunteering Opportunity")
+        print("  ")        
+        
+        repOrganization = getOrganization() # use loop cause it will return a list
+        selectedOpportunity = ""
+        try:
+            
+            try:
+                print("- Choose from the following list the opportunity that you wish to update\n")
+                        
+                for Org in repOrganization:
+                    for Opportunity in Org.getOpportunities():
+                        print(Opportunity, "\n")                
+            except:
+                print("T Function Error: failure in accessing organization opportunities")
+            else:
+
+                try:
+                    # print("- Enter the following information")
+                    opCode = int(input("Enter the op code to specify the opportunity ‣ "))
+                        
+                except:
+                    print("Invalid Input: your input should be an integer and related to an opportunity")
+                else:
+                    # try then print all of the update options
+                    selectedOpportunity = opCode
+                    
+                    try:
+                        print("Loading opportunities..\n")
+                        
+                        for Org in repOrganization:
+                            for Opportunity in Org.getOpportunities():
+                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                    print("Opportunity accessed..")
+                                else:
+                                    continue
+                                
+                    except:
+                        print("T Function Error: failure in accessing organization opportunity ")
+                    else:
+                        
+                        print("- The following are your opportunity controls\n")
+                        print("1 • Update Title")
+                        print("2 • Update Date")
+                        print("3 • Update Starting Time")
+                        print("4 • Update Ending Time")
+                        print("5 • Update Location ")
+                        print("6 • Update Task ")
+                        print("7 • Control Volunteers ")                                      
+                        print("8 • Exit ")        
+                        
+                        try:
+                            optionsOfIn = [1,2,3,4,5,6]
+                            
+                            user_input = int(input("Selection ‣ "))
+                            
+                            if user_input not in optionsOfIn:
+                                raise Exception
+                            
+                        except Exception:
+                            print("Invalid Input: your input must be an integer in range of 1 - 6")
+                            
+                        else:
+                            
+                            if user_input == 1:
+                                try:
+                                    newTitle = str(input("Title ‣ "))
+                                except:
+                                    print("Invalid Input: your Title must be string")
+                                else:
+                                    try:
+                                        for Org in repOrganization:
+                                            for Opportunity in Org.getOpportunities():
+                                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                    Opportunity.setTitle(newTitle)
+                                                    print("Your opportunity title has been altered successfully..")
+                                                else:
+                                                    continue
+                                    except:
+                                        print("T Function Error: unable to alter opportunity title")
+                            elif user_input == 2:
+                                try:
+                                    inYear = int(input("Year ‣ "))
+                                    inMonth = int(input("Month ‣ "))
+                                    inDay = int(input("Day ‣ "))  
+                                    dateIn = date(inYear, inMonth, inDay)
+                                    if not dateIn:
+                                        raise Exception
+                                except Exception:
+                                    print("Invalid Input: your input must represent a date")  
+                                else:
+                                    try:
+                                        for Org in repOrganization:
+                                            for Opportunity in Org.getOpportunities():
+                                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                    Opportunity.setDate(dateIn)
+                                                    print("Your opportunity date has been altered successfully..")
+                                                else:
+                                                    continue 
+                                    except:
+                                        print("T Function Error: unable to alter opportunity date")
+                            elif user_input == 3:
+                                try:
+                                    new_starting_time = str(input("Starting Time ‣ "))
+                                except:
+                                    print("Invalid Input: your input must represent a date")
+                                else:
+                                    try:
+                                        for Org in repOrganization:
+                                            for Opportunity in Org.getOpportunities():
+                                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                    Opportunity.setStartingTime(new_starting_time)
+                                                    print("Your opportunity starting time has been altered successfully..")
+                                                else:
+                                                    continue
+                                    except:
+                                        print("T Function Error: unable to alter opportunity starting date")    
+                            elif user_input == 4:
+                                try:
+                                    new_ending_time = str(input("Ending Time ‣ "))
+                                except:
+                                    print("Invalid Input: your input must represent an Ending Time")
+                                else:
+                                    try:
+                                        for Org in repOrganization:
+                                            for Opportunity in Org.getOpportunities():
+                                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                    Opportunity.setEndTime(new_ending_time)
+                                                    print("Your opportunity ending time has been altered successfully..")
+                                                else:
+                                                    continue
+                                    except:
+                                        print("T Function Error: unable to alter opportunity ending date") 
+                            elif user_input == 5:
+                                try:
+                                    new_Location = str(input("Location ‣ "))
+                                except:
+                                    print("Invalid Input: your input must represent a Location")
+                                else:
+                                    try:
+                                        for Org in repOrganization:
+                                            for Opportunity in Org.getOpportunities():
+                                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                    Opportunity.setLocation (new_Location)
+                                                    print("Your opportunity location has been altered successfully..")
+                                                else:
+                                                    continue
+                                    except:
+                                        print("T Function Error: unable to alter opportunity Location") 
+                            elif user_input == 9:
+                                break    
+                                
+        except:
+            print('Panel Error')
+        else:
+            pass
+        finally:
+            print("Returning to the previous page..")
+            break
 
 
 def deleteVolunteeringOpportunity():
@@ -411,7 +570,7 @@ def representativePanel(): # S PANEL
             if userInput == 1:
                 createVolunteeringOpportunity()
             elif userInput == 2:
-                print("This option is under-maintenance, try again later..")
+                updateVolunteeringOpportunity()
             elif userInput == 3:
                 deleteVolunteeringOpportunity()
             elif userInput == 4:
@@ -620,6 +779,7 @@ def generateCertificate():
                         print("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n")
                     except:
                         print("T Function Error: failed to print certificate") 
+                    
                         
         finally:        
             print("Returning to the previous page..")
@@ -798,7 +958,8 @@ def createVolAccount():
             except:
                 print("Invalid Request: something went wrong, try again later.")    
             else:
-                #system_new_users += 1
+                global system_new_users
+                system_new_users += 1
                 print("Redirecting you to volunteer panel..")
                 volunteerPanel()
 
@@ -817,19 +978,20 @@ def login():
         print("  ")
 
         print("- Enter the following information to login")
-        #system_logins += 1
+        global system_logins, system_s_logins
+        system_logins += 1
 
         try:
             user_id = str(input("Username ‣ "))
             #userActualID = user_id.strip(user_id[5:-1])
             x = ""
-            
+            global system_s_logins
                 
             if user_id.startswith('V'):
                 for volunteer in Volunteer.volunteerRecord:
                     if volunteer.getUserID() == user_id :
                         currentUser.append(volunteer)
-                        #system_s_logins += 1
+                        system_s_logins += 1
                         volunteerPanel()
                         x = "V"
                 for y in currentUser:
@@ -837,7 +999,7 @@ def login():
             elif user_id.startswith('O'):
                 for organizer in Organization_Representative.organizersRecord:
                     if organizer.getUserID() == user_id:
-                        #system_s_logins += 1
+                        system_s_logins += 1
                         currentUser.append(organizer)
                         representativePanel()
                         x = "O"
@@ -847,7 +1009,7 @@ def login():
             elif user_id.startswith('A'):
                 for admin in Administrator.administratorsRecord:
                     if admin.getUserID() == user_id:
-                        #system_s_logins += 1
+                        system_s_logins += 1
                         currentUser.append(admin)
                         administratorPanel()
                         x = "A"

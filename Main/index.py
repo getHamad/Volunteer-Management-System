@@ -464,7 +464,7 @@ class Volunteer_Opportunity:
         return f"{className}, has been destroyed"
     
     def __str__(self):
-        return f"⎡ Code: {self.__opportunityCode}\n├ Title: {self.getTitle()}\n├ Date: {self.getDate()}\n├ Location: {self.getLocation()}\n├ Starting Time: {self.getStartingTime()}\n⎣ End Time: {self.getEndTime()}"
+        return f"⎡ Code: {self.__opportunityCode}\n├ Title: {self.getTitle()}\n├ Date: {self.getDate()}\n├ Location: {self.getLocation()}\n├ Starting Time: {self.getStartingTime()}\n⎣ Ending Time: {self.getEndTime()}"
 
 
 class Organization_Representative(User):
@@ -483,7 +483,8 @@ class Organization_Representative(User):
         Organization_Representative.organizersRecord.append(self)
 
         # getters & setters
-    
+    def getUserID(self):
+        return self.__userID
     def getDOB(self):
         return super().getDOB()
     
