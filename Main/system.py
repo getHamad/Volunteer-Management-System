@@ -45,9 +45,12 @@ def viewOpportunities():
 
         try:
             for obj in Organization.organizationRecord:
-                print(f"\t{obj.getOrganizationName()}\n\tOrganization\nOrganization Code: {obj.getOrgCode()}\n-\n{obj.getDescription()}\n")
+                if obj.getOrganizationName() == "":
+                    continue
+                else:
+                    print(f"\t{obj.getOrganizationName()}\n\tOrganization\nOrganization Code: {obj.getOrgCode()}\n-\n{obj.getDescription()}\n")
         except:
-            print("T Function Error: please try again later..\nReturning to the previous page..") # : couldn't find organizations
+            print("T Function Error: failure in accessing organizations..\nReturning to the previous page..") # : couldn't find organizations
             break
         else:
             pass
@@ -62,7 +65,7 @@ def viewOpportunities():
             
             if userInLower == "yes":
                 try:
-                    userInput = str(input("Enter Organization Code ‣ "))
+                    userInput = str(input("Organization Code ‣ "))
                 except:
                     print("Invalid Input: your input must be an organization code.. e.x. 'O201'")
                 else:   
@@ -79,7 +82,7 @@ def viewOpportunities():
                                 
                                 # Filtering to output the right message to the user in-case there was 0 opportunities in an organization
                                 if len(obj.getOpportunities()) == 0:
-                                    print("")
+                                    print("The requested organization is not offering any opportunities, try again later..")
                                     break
                                 else:
                                     global system_op_views
@@ -88,14 +91,14 @@ def viewOpportunities():
                                         print(opportunity, "\n")
                                         
                     except: 
-                        print("T Function Error: please try again later..\nReturning to the previous page..") # Error: couldn't find opportunities
+                        print("T Function Error: failure in accessing organization opportunities..\nReturning to the previous page..") # Error: couldn't find opportunities
                         break
                     
                     
                     try:
                         userInput = str(input("Would you like to register in an opportunity? ‣ "))
                     except:
-                            print("Invalid Input: your input must be an organization code.. e.x. 'O201'")
+                            print("Invalid Input: your input must be a 'Yes' or 'No'")
                     else:
                         userInLower = userInput.lower() 
                         try:
@@ -112,24 +115,20 @@ def viewOpportunities():
                             else:
                                 raise Exception
                         except Exception:
-                            print("Invalid Answer: please try again\nReturning to the previous page..")
+                            print("Invalid Answer: please try again later..\nReturning to the previous page..")
                             break
                         else:
                             for obj in currentOrganization:
                                 for opportunity in obj.getOpportunities():
                                     if opportunity.getOpportunityCode() == userInput:
-                                        opportunity.setInterest(getLoggedUser())
-                                        """
-                                        to test the view tasks function (Will be removed later)
-                                        """
-                                        opportunity.addToAssignedVolunteers(getLoggedUser())
                                         
-                                        currentOrganization.clear()
+                                        opportunity.setInterest(getLoggedUser())
+                                        currentOrganization.clear() # Cleared cache of the selected organization
                                         print("You have been registered your interest successfully\nReturning to the previous page..")
                                         break
                             
             elif userInLower == "no":
-                print("Alright..\nReturning to the previous page..") 
+                print("Returning to the previous page..") 
                 break
             
             
@@ -151,10 +150,11 @@ def viewAssignedTasks():
                     for task in obj.getTasks():
                         print(task) # Formate the task printing
         except:
-            print("T Function Error: please try again later..") # write the exception and what to do
+            print("T Function Error: failure in accessing user tasks, please try again later..") # write the exception and what to do
         else:
             userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
             if userInput: 
+                print("Returning to the previous page..")
                 break
             
 
@@ -175,10 +175,9 @@ def viewCompletedTasks():
                 else:
                     print("- The following are your completed tasks\n")
                     for task in completedTasks:
-                        print("- The following are your completed tasks\n")
                         print(task)
         except:
-            print("T Function Error: please try again later..") # write the exception and what to do
+            print("T Function Error: failure in accessing user completed tasks, please try again later..") # write the exception and what to do
         else:
             userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
             if userInput: 
@@ -197,11 +196,11 @@ def viewVolunteeringHours():
             for obj in currentUser:
                 completedHours = obj.getTotalVolunteerHours()
                 if completedHours == 0:
-                    print("You haven't gained any volunteering credits yes, try again later")
+                    print("You haven't been credited with any volunteering hours yet, try again later")
                 else:
                     print(f"You have completed {completedHours} volunteering hours")
         except:
-            print("T Function Error: please try again later..") # write the exception and what to do
+            print("T Function Error: failure in accessing user completed volunteering hours, please try again later..") # write the exception and what to do
         else:
             userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
             if userInput: 
@@ -239,7 +238,7 @@ def volunteerPanel():
                 viewVolunteeringHours()
             elif userInput == 5:
                 currentUser.clear()
-                print("Logged-out\nReturning to the Authorization page..")
+                print("You have been logged-out..\nReturning to the Authorization page..")
                 break
             else:
                 raise Exception
@@ -263,7 +262,7 @@ def getOrganization(): #
                 else:
                     continue
     except:
-        print("T Function Error: Organization not found")
+        print("T Function Error: failure in accessing organization of representative")
     else:
         return organizationProfile # print all the controls
 
@@ -278,7 +277,7 @@ def createVolunteeringOpportunity(): # standalone
                 raise Exception
             
         except Exception:
-            print("T Function Error: Couldn't find any organizations related to you")
+            print("T Function Error: couldn't find any organizations related to you")
             
         else:
             
@@ -939,7 +938,6 @@ def createVolAccount():
             Year = int(input("Date of Birth - Year ‣ "))
             Month = int(input("Date of Birth - Month ‣ "))
             Day = int(input("Date of Birth - Day ‣ "))
-            DOJ = date.today()
             DOB = date(Year, Month, Day)
             skills = str(input("Skills separated by , ‣ "))
         except:
@@ -947,10 +945,11 @@ def createVolAccount():
         else:
             try:
                 volunteer = Volunteer(
-                fullname, mobile, email, educationLevel, DOJ, DOB, skills
+                fullname, mobile, email, educationLevel,  DOB, skills
             )
                 currentUser.append(volunteer)
                 print("Your account has been created successfully!")
+                
                 for obj in currentUser:
                     print(obj)
                 for vol in Volunteer.volunteerRecord: # remove 
@@ -985,7 +984,7 @@ def login():
             user_id = str(input("Username ‣ "))
             #userActualID = user_id.strip(user_id[5:-1])
             x = ""
-            global system_s_logins
+            global system_s_logins, system_f_logins
                 
             if user_id.startswith('V'):
                 for volunteer in Volunteer.volunteerRecord:
@@ -993,33 +992,40 @@ def login():
                         currentUser.append(volunteer)
                         system_s_logins += 1
                         volunteerPanel()
-                        x = "V"
-                for y in currentUser:
-                    print(y)
+                else:
+                    system_f_logins += 1
+                    print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    
+
             elif user_id.startswith('O'):
                 for organizer in Organization_Representative.organizersRecord:
                     if organizer.getUserID() == user_id:
                         system_s_logins += 1
                         currentUser.append(organizer)
                         representativePanel()
-                        x = "O"
-                for y in currentUser: 
-                    print(y)
-                break
+                        
+                else:
+                    system_f_logins += 1
+                    print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    
+
             elif user_id.startswith('A'):
                 for admin in Administrator.administratorsRecord:
                     if admin.getUserID() == user_id:
                         system_s_logins += 1
                         currentUser.append(admin)
                         administratorPanel()
-                        x = "A"
-                print(x)
-                break
+                        
+                else:
+                    system_f_logins += 1
+                    print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    
+
             else:
                 raise Exception
 
         except Exception:
-            print("Invalid Username: try again later.")
+            print("Invalid Input: your input formate is incorrect, try again later..")
         else:
             break
 
@@ -1091,11 +1097,11 @@ def system():
     Testing Section
     """
 
-for obj in currentUser:
+"""for obj in currentUser:
     print(obj, "\n")
     
 for obj in Organization_Representative.organizersRecord:
     print(obj)
 for obj in Volunteer.volunteerRecord:
-    print(obj)
+    print(obj)"""
 system()

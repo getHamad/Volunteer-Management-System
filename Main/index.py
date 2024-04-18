@@ -118,7 +118,7 @@ class User:
     randomID = int(strOfID)
 
     def __init__(
-        self, fullname="", mobile="", email="", educationLevel="", DOJ=date, DOB=date
+        self, fullname="", mobile="", email="", educationLevel="", DOB=date
     ) -> None:
         User.randomID += 1
         self.__userID = User.randomID
@@ -127,9 +127,8 @@ class User:
         self.__email = email
         self.__educationLevel = educationLevel
         self.__DOB = DOB
-        self.__DOJ = DOJ
         self.__DOJ = datetime.today()
-        User.userRecord.append(self)
+        #User.userRecord.append(self)
 
         # getters & setters
 
@@ -209,11 +208,10 @@ class Volunteer(User):
         mobile="",
         email="",
         educationLevel="",
-        DOJ=date,
         DOB=date,
         skills="",
-    ) -> None:
-        super().__init__(fullname, mobile, email, educationLevel, DOJ, DOB)
+    ):
+        super().__init__(fullname, mobile, email, educationLevel, DOB)
         self.__userID = "V" + str(self._User__userID)
         self.__skills = skills.split(",")
         self.__tasks = []
@@ -316,7 +314,7 @@ class Volunteer(User):
     
     
     def __str__(self):
-        return super().__str__()
+        return f"{super().__str__()}\nTotal V Hours: {self.__totalVolunteeringHrs}"
 
 
 class Volunteer_Opportunity:
@@ -383,7 +381,7 @@ class Volunteer_Opportunity:
     def getTasks(self):
         return self.__tasks
 
-    def addToAssignedVolunteers(self,volunteer=Volunteer()):
+    def addToAssignedVolunteers(self, volunteer = Volunteer()): 
         """
         addToAssignedVolunteers: this function adds a volunteer to a list of assigned volunteers.
 
@@ -411,7 +409,7 @@ class Volunteer_Opportunity:
         Global functions 
         """
 
-    def setInterest(self, interest=Volunteer()):
+    def setInterest(self, interest):
         """
         setInterest: this function adds a volunteer to the list of interested volunteers
 
@@ -475,9 +473,9 @@ class Organization_Representative(User):
     organizersRecord = []
 
     def __init__(
-        self, fullname="", mobile="", email="", educationLevel="", DOJ=date, DOB=date
+        self, fullname="", mobile="", email="", educationLevel="", DOB=date
     ) -> None:
-        super().__init__(fullname, mobile, email, educationLevel, DOJ, DOB)
+        super().__init__(fullname, mobile, email, educationLevel, DOB)
         self.__userID = "O" + str(self._User__userID)
 
         Organization_Representative.organizersRecord.append(self)
@@ -683,9 +681,9 @@ class Administrator(User):
     administratorsRecord = []
 
     def __init__(
-        self, fullname="", mobile="", email="", educationLevel="", DOJ=date, DOB=date
+        self, fullname="", mobile="", email="", educationLevel="", DOB=date
     ) -> None:
-        super().__init__(fullname, mobile, email, educationLevel, DOJ, DOB)
+        super().__init__(fullname, mobile, email, educationLevel,  DOB)
         self.__userID = "A" + str(self._User__userID)
         Administrator.administratorsRecord.append(self)
         # getters & setters
