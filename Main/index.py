@@ -260,6 +260,10 @@ class Volunteer(User):
 
         Returns:
             int : the new total volunteering hours after adding or subtracting
+            
+        Notes: 
+            This function is only used in the backend of the code, you may consider it 
+            as a part of a whole process (which is marking a task as completed and crediting volunteers)
         """
         if sign == "+":
             self.__totalVolunteeringHrs += amount

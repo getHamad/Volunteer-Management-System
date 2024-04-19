@@ -326,6 +326,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
         
         repOrganization = getOrganization() # use loop cause it will return a list
         selectedOpportunity = ""
+        taskCache = 0
         try:
             
             try:
@@ -340,7 +341,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
 
                 try:
                     # print("- Enter the following information")
-                    opCode = int(input("Enter the op code to specify the opportunity ‣ "))
+                    opCode = int(input("Opportunity Code ‣ "))
                         
                 except:
                     print("Invalid Input: your input should be an integer and related to an opportunity")
@@ -354,7 +355,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                         for Org in repOrganization:
                             for Opportunity in Org.getOpportunities():
                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
-                                    print("Opportunity accessed..")
+                                    print("Opportunity accessed..\n")
                                 else:
                                     continue
                                 
@@ -371,7 +372,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                         print("6 • Update Task ")
                         print("7 • Control Volunteers ")                                      
                         print("8 • Exit ")        
-                        
+                        print(" ")
                         try:
                             optionsOfIn = [1,2,3,4,5,6]
                             
@@ -396,7 +397,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                             for Opportunity in Org.getOpportunities():
                                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
                                                     Opportunity.setTitle(newTitle)
-                                                    print("Your opportunity title has been altered successfully..")
+                                                    print("Your opportunity title has been altered successfully..\n")
                                                 else:
                                                     continue
                                     except:
@@ -417,7 +418,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                             for Opportunity in Org.getOpportunities():
                                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
                                                     Opportunity.setDate(dateIn)
-                                                    print("Your opportunity date has been altered successfully..")
+                                                    print("Your opportunity date has been altered successfully..\n")
                                                 else:
                                                     continue 
                                     except:
@@ -433,7 +434,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                             for Opportunity in Org.getOpportunities():
                                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
                                                     Opportunity.setStartingTime(new_starting_time)
-                                                    print("Your opportunity starting time has been altered successfully..")
+                                                    print("Your opportunity starting time has been altered successfully..\n")
                                                 else:
                                                     continue
                                     except:
@@ -449,7 +450,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                             for Opportunity in Org.getOpportunities():
                                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
                                                     Opportunity.setEndTime(new_ending_time)
-                                                    print("Your opportunity ending time has been altered successfully..")
+                                                    print("Your opportunity ending time has been altered successfully..\n")
                                                 else:
                                                     continue
                                     except:
@@ -465,11 +466,87 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                             for Opportunity in Org.getOpportunities():
                                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
                                                     Opportunity.setLocation (new_Location)
-                                                    print("Your opportunity location has been altered successfully..")
+                                                    print("Your opportunity location has been altered successfully..\n")
                                                 else:
                                                     continue
                                     except:
                                         print("T Function Error: unable to alter opportunity Location") 
+                                        
+                            elif user_input == 6:
+                                try:
+                                    print("Loading tasks..\n")
+                                    
+                                    for Org in repOrganization:
+                                        for Opportunity in Org.getOpportunities():
+                                            if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                if len(Opportunity.getTasks()) == 0:
+                                                    print(f"'{Opportunity.getTitle()}' opportunity has no tasks assigned to it yet, try again later..")
+                                                    break
+                                                else:
+                                                    for task in Opportunity.getTasks():
+                                                        print(task, "\n")
+                                except:
+                                    print("T Function Error: unable to access opportunity tasks")
+                                else:
+                                    
+                                    try:
+                                        secUserInput = int(input("Task no ‣ "))
+                                    except:
+                                        print("Invalid Input: your input must be an integer of a task code")
+                                    else:
+                                        
+                                        taskCache = secUserInput
+                                        
+                                        for Org in repOrganization:
+                                            for Opportunity in Org.getOpportunities():
+                                                if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                    for task in Opportunity.getTasks():
+                                                        if task.getTaskNo() == taskCache:
+                                                            try:
+                                                                print(f"- The following are your '{task.getTitle()}' task controls\n")
+                                                                print("1 • Update Title")
+                                                                print("2 • Update Status")
+                                                                print("3 • Exit")
+                                                                print(" ")
+                                                                try:
+                                                                    choices = [1,2,3]
+                                                                    thiUserInput = int(input("Selection ‣ "))
+                                                                    if thiUserInput not in choices:
+                                                                        raise Exception
+                                                                except Exception:
+                                                                    print("Invalid Input: your input must be an integer") 
+                                                                else:
+                                                                    if thiUserInput == 1:
+                                                                        try:
+                                                                            forUserInput = str(input("New Title ‣ "))
+                                                                        except Exception:
+                                                                            print("Invalid Input: your input must be an string") 
+                                                                        else:
+                                                                            try:
+                                                                                task.setTitle(forUserInput)
+                                                                            except:
+                                                                                print("F Function Error: failure in altering task")
+                                                                            else:
+                                                                                print("Your task title has been altered successfully..\n")
+                                                                        
+                                                                    elif thiUserInput == 2: 
+                                                                        try:
+                                                                            fifUserInput = str(input("New Status ‣ "))
+                                                                        except Exception:
+                                                                            print("Invalid Input: your input must be an string")
+                                                                        else:
+                                                                            try:
+                                                                                print("Loading task status..")  
+                                                                                Opportunity.updateTaskStatus(task, fifUserInput)
+                                                                            except:
+                                                                                print("F Function Error: failure in altering task")
+                                                                            else:
+                                                                                print("Your task status has been altered successfully..\n")
+                                                                    elif thiUserInput == 3:
+                                                                        break
+                                                            except:
+                                                                print("T Function Error: failure in initializing task controls")                                                         
+                                        
                             elif user_input == 9:
                                 break    
                                 
