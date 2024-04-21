@@ -1,6 +1,15 @@
 from datetime import date, datetime
 from index import *
+"""
 
+Title: Volunteer Management System
+File: saves.py
+Use of File: back-end of the backup, called as the "save of different records" of the overall system,
+and can be used to load a set of already made users, organizations, opportunities, and tasks
+Imports: index.py / datetime
+Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
+
+"""
 
 class Save:
     
@@ -8,7 +17,8 @@ class Save:
         self.saveNo = 1
         
     def load(self):
-        # 16 Tasks
+        
+        # 16 Task Objects
         Food_Distribution= Task(
             "Food Distribution","Team Work,Communication",5,8)
         
@@ -56,7 +66,7 @@ class Save:
 
         Historical_Society_Volunteer = Task(
             "Historical Society Volunteer", "History Knowledge,Customer Service", 3, 8)
-        # Defining additional tasks
+        
         Public_Speaking_Workshop = Task(
             "Public Speaking Workshop", "Public Speaking,Confidence Building", 4, 6)
 
@@ -100,11 +110,7 @@ class Save:
             "Cultural Heritage Preservation", "Attention to Detail,Passion for History", 3, 5)
         
 
-
-
-
-
-        # 10 Volunteers
+        # 10 Volunteer Objects
         Ahmed_Hamad = Volunteer(
             "Ahmed Hamad Naser", "0501221844", "ahmed@zu.ac.ae", "PhD", date(2000, 2, 2), "Team Work, Communication")
         Fatima_Ali = Volunteer(
@@ -129,7 +135,7 @@ class Save:
             "Abdullah Rashed", "0500112233", "Abdullah@zu.ac.ae", "PhD", date(1996, 12, 11), "Cooking Skills,Teamwork")
 
 
-        # 6 Representatives
+        # 6 Representative Objects
         Khalid_Alzaabi = Organization_Representative(
             "Khalid Al Zaabi", "0501234567", "khalid.alz@org.ae", "Master's",  date(1985, 5, 25))
         Saeed_AlZaabi = Organization_Representative(
@@ -145,7 +151,7 @@ class Save:
         Tahnoon_Alzaabi = Organization_Representative(
             "Tahnoon Al zaabi", "0501623444", "Tahnoon.alz@org.ae", "PhD",  date(2002, 9, 29)) # Empty Organizer
 
-        # 5 Organizations
+        # 5 Organization Objects
         Emirates_Red_Crescent = Organization(
             "Emirates Red Crescent",
             "A volunteer organization that plays a leading role in humanitarian work at both local and international levels.",
@@ -168,7 +174,7 @@ class Save:
             512)
 
 
-        # 3 Admins
+        # 3 Admins Objects
         Khalid_Al_Futtaim = Administrator(
             "Khalid Al Futtaim", "0501234567", "khalid.alfuttaim@admin.com", "Master's",  date(1985, 5, 25))
 
@@ -203,7 +209,7 @@ class Save:
         
         
         """
-        add task to opportunity
+        Adding tasks to opportunities
         ....
         """
         Emirates_Red_Crescent.addTaskToOpportunity(Food_Distribution, 1)
@@ -244,17 +250,9 @@ class Save:
         Emirates_Animal_Welfare_Society.addTaskToOpportunity(A2_Disaster_Preparedness_Workshop, 14) 
         Emirates_Animal_Welfare_Society.addTaskToOpportunity(A2_Cultural_Heritage_Preservation, 15)
 
-        #Emirates-Red-Crescent O100 - Opportunitiy codes - 1 , 2 , 3
-        #Beit-Al-Khair-Society O201 - Opportunity codes - 4 , 5 , 6
-        #Dubai-Cares O307 - Opportunity codes - 7 , 8 , 9
-        #Emirates-Enviromental-Group - O404 - Opportunity codes - 10 , 11 , 12
-        #Emirates-Animal-Walfare-Society - O512 - Opportunity codes - 13, 14, 15
-
     
         """
-        add representatives to all organizations
-    
-        ....
+        Adding representatives to different organizations
         """
         Emirates_Red_Crescent.setRepresentative(Khalid_Alzaabi)
         Beit_Al_Khair_Society.setRepresentative(Saeed_AlZaabi)
@@ -264,51 +262,5 @@ class Save:
         Emirates_Red_Crescent.setRepresentative(Mariam_AlHashimi)
 
 
-
-
-
-
-
-        """
-        
-        ....
-        """
-
-
-
-
-
-
-        
-        return f"Done" 
-
-
-"""for obj in Volunteer.volunteerRecord:
-    print(obj, "\n")
-
-print(Task.getTasks())"""
-
-"""# I NEED THIS
-# adding a task
-x = input("enter task name: ")
-y = input("enter task skills separated by ,: ")
-u = str(input("enter credit hour amount: "))
-z = input("enter task required number of vol: ")
-
-Task(x, y, u, z)  # type: ignore
-
-
-for task in Task.tasksRecord:
-    print(task)
-
-x = input("enter task name: ")
-y = input("enter task skills separated by ,: ")
-u = input("enter credit hour amount: ")
-z = input("enter task required number of vol: ")
-
-Task(x, y, u, z)
-
-
-for task in Task.tasksRecord:
-    print(task)"""
+        return f"Done"
 

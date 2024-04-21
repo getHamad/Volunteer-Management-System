@@ -2,12 +2,18 @@ from datetime import datetime, date
 
 """
 
+Title: Volunteer Management System
+File: index.py
+Use of File: back-end of the functions, called as the "base structure" of the overall system
+Imports: datetime
+Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
 
 """
 
 class Task:
+    
     """
-    Task class that contains attributes including task number,title, required skills, credit hours, number of volunteers, and status.
+    Task class that contains attributes including task number, title, required skills, credit hours, number of volunteers, and status
     """
 
     tasksRecord = []
@@ -24,8 +30,6 @@ class Task:
         self.__numOfVolunteersNeeded = numOfVol
         self.__status = "Newly Added"
         Task.tasksRecord.append(self)
-
-        # getters & setters
 
     def setTaskNo(self, taskNo):
         self.__taskNo = taskNo
@@ -53,9 +57,10 @@ class Task:
 
     def setNumOfVolunteerNeeded(self, num):
         self.__numOfVolunteersNeeded = num
+        
         """
-            Global functions 
-            """
+        Global functions 
+        """
 
     def getNumOfVolunteerNeeded(taskNo):
         for task in Task.tasksRecord:
@@ -187,9 +192,9 @@ class User:
     def getDOJ(self):
         return self.__DOJ
 
-        """
-        Global functions 
-        """
+    """
+    Global functions 
+    """
 
     def __str__(self):
         return f"User ID: {self.__userID}\nName: {self.__fullName}\nMobile: {self.__mobile}\nEamil: {self.__email}\nEducation Level: {self.__educationLevel}\nDate of Birth: {self.__DOB}\nDate of Join: {self.__DOJ}"

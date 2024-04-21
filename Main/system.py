@@ -1,20 +1,48 @@
 from index import *
 from saves import Save
 from datetime import datetime, date
+"""
+
+Title: Volunteer Management System
+File: system.py
+Use of File: front-end of the system, called as the "Panel" of the overall system
+and used to execute different set of actions, and tasks throughout the system
+Imports: index.py / saves.py / datetime
+Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
 
 """
-    Handling Logged-in User
+
+
+"""
+    Handling Logged-in User & its related functions
 """
 
 currentUser = []
 
-def getLoggedUser():
+def getLoggedUser() -> object:
     
     x = object()
     for user in currentUser:
         x = user
         
     return x
+
+def getLoggedUserName() -> str:
+    
+    x = ""
+    for user in currentUser:
+        x = user.getFullName()
+        
+    return x
+
+def getLoggedUserID() -> str:
+    
+    x = ""
+    for user in currentUser:
+        x = user.getUserID()
+        
+    return x
+
 
 """
     Activity logging
@@ -223,7 +251,8 @@ def volunteerPanel():
     while True:
         print(" ")
         print("⎧ Volunteer Management System")
-        print("⎩      Volunteer Panel")
+        print("⎪ Volunteer Panel")        
+        print(f"⎩ Welcome {getLoggedUserName()}!")
         print("  ")
 
         print("- The following are your controls as a volunteer\n")
@@ -798,7 +827,8 @@ def representativePanel(): # S PANEL
     while True:
         print(" ")
         print("⎧ Volunteer Management System")
-        print("⎩ Organization Representative Panel")
+        print("⎪ Organization Representative Panel")
+        print(f"⎩ Welcome {getLoggedUserName()}!")
         print("  ")
 
         print("- The following are your controls as a organizer\n")
@@ -1126,7 +1156,8 @@ def administratorPanel():
     while True:
         print(" ")
         print("⎧ Volunteer Management System")
-        print("⎩ Administrator Panel")
+        print("⎪ Administrator Panel")
+        print(f"⎩ Welcome {getLoggedUserName()}!")
         print("  ")
 
         print("- The following are your controls as an administrator\n")
@@ -1335,7 +1366,7 @@ def system():
                         createVolAccount()
                         createAccount = True
                     except:
-                        print("Error: UNABLE TO RUN MODULE")
+                        print("Error xFilter: unable to run create volunteer xFilter in sys..")
                     else:
                         if createAccount == True:
                             createAccount = False
@@ -1369,19 +1400,4 @@ def system():
                     raise Exception
             except Exception:
                 print("Try again..")
-
-
-
-
-    """
-    Testing Section
-    """
-
-"""for obj in currentUser:
-    print(obj, "\n")
-    
-for obj in Organization_Representative.organizersRecord:
-    print(obj)
-for obj in Volunteer.volunteerRecord:
-    print(obj)"""
 system()
