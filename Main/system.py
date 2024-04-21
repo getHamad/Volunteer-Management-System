@@ -66,13 +66,17 @@ def viewOpportunities():
             if userInLower == "yes":
                 try:
                     userInput = str(input("Organization Code ‣ "))
+                    userInput = userInput.upper()
                 except:
                     print("Invalid Input: your input must be an organization code.. e.x. 'O201'")
                 else:   
                     
                     try:
+                        xFilter = ""
+                        
                         for obj in Organization.organizationRecord:
                             if obj.getOrgCode() == userInput:
+                                xFilter = "0"
                                 print(" ")
                                 print("⎧\tVolunteer Management System")
                                 print(f"⎩\tVolunteer Panel ➢ View Volunteering Opportunities")
@@ -89,8 +93,11 @@ def viewOpportunities():
                                     system_op_views += 1
                                     for opportunity in obj.getOpportunities():
                                         print(opportunity, "\n")
-                                        
-                    except: 
+                        
+                        if xFilter != "0":
+                            raise Exception
+
+                    except Exception : 
                         print("T Function Error: failure in accessing organization opportunities..\nReturning to the previous page..") # Error: couldn't find opportunities
                         break
                     
@@ -106,6 +113,7 @@ def viewOpportunities():
                                 
                                 try:
                                     userInput = int(input("Enter opportunity code ‣ "))
+                                    
                                 except:
                                     print("Invalid Input: your input must be an opportunity code.. e.x. '20'")
                                     
@@ -145,6 +153,7 @@ def viewAssignedTasks():
                 tasks = obj.getTasks()
                 if len(tasks) == 0:
                     print("- You are not assigned to any tasks at the moment")
+                    print("\n")
                 else:
                     print("- The following are your assigned tasks\n")
                     for task in obj.getTasks():
@@ -172,6 +181,7 @@ def viewCompletedTasks():
                 completedTasks = obj.getCompletedTasks()
                 if len(completedTasks) == 0:
                     print("- You haven't completed any tasks yet, try again later")
+                    print("\n")
                 else:
                     print("- The following are your completed tasks\n")
                     for task in completedTasks:
@@ -197,8 +207,10 @@ def viewVolunteeringHours():
                 completedHours = obj.getTotalVolunteerHours()
                 if completedHours == 0:
                     print("You haven't been credited with any volunteering hours yet, try again later")
+                    print("\n")
                 else:
                     print(f"You have completed {completedHours} volunteering hours")
+                    print("\n")
         except:
             print("T Function Error: failure in accessing user completed volunteering hours, please try again later..") # write the exception and what to do
         else:
@@ -317,7 +329,7 @@ def createVolunteeringOpportunity(): # standalone
             break
 
 
-def updateVolunteeringOpportunity(): # look at it later (is it logical??)
+def updateVolunteeringOpportunity(): 
     while True:
         print(" ")
         print("⎧ Volunteer Management System")
@@ -350,16 +362,23 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                     selectedOpportunity = opCode
                     
                     try:
+                        print("\n")
                         print("Loading opportunities..\n")
-                        
+                        xFilter = ""
                         for Org in repOrganization:
                             for Opportunity in Org.getOpportunities():
                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
                                     print("Opportunity accessed..\n")
+                                    xFilter = "0"
                                 else:
                                     continue
-                                
-                    except:
+                        
+                            if xFilter == "0":
+                                continue
+                            else:
+                                raise Exception
+                            
+                    except Exception:
                         print("T Function Error: failure in accessing organization opportunity ")
                     else:
                         
@@ -374,7 +393,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                         print("8 • Exit ")        
                         print(" ")
                         try:
-                            optionsOfIn = [1,2,3,4,5,6]
+                            optionsOfIn = [1,2,3,4,5,6,7,8]
                             
                             user_input = int(input("Selection ‣ "))
                             
@@ -385,7 +404,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                             print("Invalid Input: your input must be an integer in range of 1 - 6")
                             
                         else:
-                            
+                            print("\n")
                             if user_input == 1:
                                 try:
                                     newTitle = str(input("Title ‣ "))
@@ -413,6 +432,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                 except Exception:
                                     print("Invalid Input: your input must represent a date")  
                                 else:
+                                    print("\n")
                                     try:
                                         for Org in repOrganization:
                                             for Opportunity in Org.getOpportunities():
@@ -429,6 +449,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                 except:
                                     print("Invalid Input: your input must represent a date")
                                 else:
+                                    print("\n")
                                     try:
                                         for Org in repOrganization:
                                             for Opportunity in Org.getOpportunities():
@@ -445,6 +466,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                 except:
                                     print("Invalid Input: your input must represent an Ending Time")
                                 else:
+                                    print("\n")
                                     try:
                                         for Org in repOrganization:
                                             for Opportunity in Org.getOpportunities():
@@ -461,6 +483,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                 except:
                                     print("Invalid Input: your input must represent a Location")
                                 else:
+                                    print("\n")
                                     try:
                                         for Org in repOrganization:
                                             for Opportunity in Org.getOpportunities():
@@ -474,6 +497,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                         
                             elif user_input == 6:
                                 try:
+                                    print("\n")
                                     print("Loading tasks..\n")
                                     
                                     for Org in repOrganization:
@@ -481,11 +505,12 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                             if Opportunity.getOpportunityCode() == selectedOpportunity:
                                                 if len(Opportunity.getTasks()) == 0:
                                                     print(f"'{Opportunity.getTitle()}' opportunity has no tasks assigned to it yet, try again later..")
-                                                    break
+                                                    raise Exception
                                                 else:
+                                                    print("Tasks accessed..\n")
                                                     for task in Opportunity.getTasks():
                                                         print(task, "\n")
-                                except:
+                                except Exception:
                                     print("T Function Error: unable to access opportunity tasks")
                                 else:
                                     
@@ -494,9 +519,9 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                     except:
                                         print("Invalid Input: your input must be an integer of a task code")
                                     else:
-                                        
+                                        print("\n")
                                         taskCache = secUserInput
-                                        
+                                        xFilter = ""
                                         for Org in repOrganization:
                                             for Opportunity in Org.getOpportunities():
                                                 if Opportunity.getOpportunityCode() == selectedOpportunity:
@@ -507,7 +532,8 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                                                 print("1 • Update Title")
                                                                 print("2 • Update Status")
                                                                 print("3 • Exit")
-                                                                print(" ")
+                                                                print("\n")
+                                                                xFilter = "0"
                                                                 try:
                                                                     choices = [1,2,3]
                                                                     thiUserInput = int(input("Selection ‣ "))
@@ -516,12 +542,14 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                                                 except Exception:
                                                                     print("Invalid Input: your input must be an integer") 
                                                                 else:
+                                                                    print("\n")
                                                                     if thiUserInput == 1:
                                                                         try:
                                                                             forUserInput = str(input("New Title ‣ "))
                                                                         except Exception:
                                                                             print("Invalid Input: your input must be an string") 
                                                                         else:
+                                                                            print("\n")
                                                                             try:
                                                                                 task.setTitle(forUserInput)
                                                                             except:
@@ -535,6 +563,7 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                                                         except Exception:
                                                                             print("Invalid Input: your input must be an string")
                                                                         else:
+                                                                            print("\n")
                                                                             try:
                                                                                 print("Loading task status..")  
                                                                                 Opportunity.updateTaskStatus(task, fifUserInput)
@@ -544,10 +573,152 @@ def updateVolunteeringOpportunity(): # look at it later (is it logical??)
                                                                                 print("Your task status has been altered successfully..\n")
                                                                     elif thiUserInput == 3:
                                                                         break
-                                                            except:
+                                                            except Exception:
                                                                 print("T Function Error: failure in initializing task controls")                                                         
+                                                    if xFilter != "0":
+                                                        print("Opportunity does not contain any task with the request code, try again later.. ")
+                            elif user_input == 7:
+                                try:
+                                    print(f"- The following are your volunteer controls\n")
+                                    print("1 • View Volunteers Interest List")
+                                    print("2 • View Assigned Volunteers List")
+                                    print("3 • Exit")
+                                    print("\n")
+                                    
+                                    try:
+                                        choices = [1,2,3]
+                                        user_input = int(input("Selection ‣ "))
+                                        if user_input not in choices:
+                                            raise Exception
+                                    except:
+                                        print("Invalid Input: your input must be an integer and a menu selection e.x. '1, 2, or 3 to exit'") 
+                                    else:
+                                        print("\n")
+                                        if user_input == 1:
+                                            
+                                            print("Loading Volunteers Interest List..\n")
+                                            try:
+                                                for Org in repOrganization:
+                                                    for Opportunity in Org.getOpportunities():
+                                                        if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                            if len(Opportunity.getInterest()) == 0:
+                                                                print(f"'{Opportunity.getTitle()}' opportunity has no interest at the moment, try again later..\n")
+                                                                break
+                                                            else:
+                                                                print("Volunteers Interest List accessed..\n")
+                                                                for interest in Opportunity.getInterest():
+                                                                    print(interest, "\n")
+                                            except:
+                                                print("T Function Error: failure in accessing volunteer interest list")
+                                            else:
+                                                userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
+                                                if userInput: 
+                                                    break
+                                            
+                                        elif user_input == 2:
+                                            xFilter = False
+                                            try:
+                                                for Org in repOrganization:
+                                                    for Opportunity in Org.getOpportunities():
+                                                        if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                            
+                                                            if len(Opportunity.getInterest()) == 0:
+                                                                print(f"'{Opportunity.getTitle()}' opportunity has no interest at the moment, try again later..\n")
+                                                                xFilter = True
+                                                                userInput = str(input("Click 'Space then Enter' to return to the previous page ‣ "))
+                                                                if userInput: 
+                                                                    break
+                                                            else:
+                                                                print("Volunteers Interest List accessed..\n")
+                                                                print("⏛"*20, "\n")
+                                                                for interest in Opportunity.getInterest():
+                                                                    print(interest, "\n")
+
+                                                            if len(Opportunity.getAssignedVolunteers()) == 0:
+                                                                print("⏛"*20, "\n")
+                                                                print(f"'{Opportunity.getTitle()}' opportunity has no assigned volunteers at the moment\n")
+                                                            else:
+                                                                print("Assigned Volunteers List accessed..\n")
+                                                                print("⏛"*20, "\n")
+                                                                for assigned in Opportunity.getAssignedVolunteers():
+                                                                    print(assigned, "\n")
+                                            except:
+                                                print("T Function Error: failure in accessing volunteers lists")
+                                            else:
+                                                if xFilter != True:
+                                                    try:
+                                                        choices = ["yes", "no"]
+                                                        secInput = str(input("Do you wish to assign a volunteer? ‣ "))
+                                                        secInput = secInput.lower()
+                                                        if secInput not in choices:
+                                                            raise Exception
+                                                        
+                                                    except Exception:
+                                                        print("Invalid Input: your input must be 'Yes' or 'No'")
+                                                    else:
+                                                        
+                                                        if secInput == "yes":
+                                                            
+                                                            try:
+                                                                thiInput = int(input("Volunteer ID ‣ V"))
+                                                                thiInput = "V" + str(thiInput)
+                                                            except:
+                                                                print("Invalid Input: your input must be a integer that represent a volunteer ID")
+                                                            else:
+                                                                
+                                                                try:
+                                                                    xFilter = ""
+                                                                    print("Loading volunteer..\n")
+                                                                    volCache = []
+                                                                    for volunteer in Volunteer.volunteerRecord:
+                                                                        if volunteer.getUserID() == thiInput:
+                                                                            volCache.append(volunteer)
+                                                                            xFilter = "0"
+                                                                            print("Volunteer accessed..\n")
+                                                                        else:
+                                                                            continue
+                                                                    
+                                                                    if xFilter != "0":
+                                                                        raise Exception
+                                                                        
+                                                                except Exception:
+                                                                    print("F Function Error: failure in accessing the requested volunteer")
+                                                                else:
+                                                                    
+                                                                    print("Processing request..\n")
+                                                                    try:
+                                                                        for volunteer in volCache:
+                                                                            for Org in repOrganization:
+                                                                                for Opportunity in Org.getOpportunities():
+                                                                                    if Opportunity.getOpportunityCode() == selectedOpportunity:
+                                                                                        if volunteer in Opportunity.getInterest():
+                                                                                            Opportunity.addToAssignedVolunteers(volunteer)
+                                                                                            print(f"Volunteer '{volunteer.getFullName()}' has been added to '{Opportunity.getTitle()}' opportunity successfully..")
+                                                                                        else:
+                                                                                            print(f"Volunteer '{volunteer.getFullName()}' did not assign his interest for this opportunity..")
+                                                                                            raise Exception
+                                                                    except:
+                                                                        print("F Function Error: failure in processing request")
+                                                                    else:
+                                                                        volCache.clear()
+                                                                        xFilter = ""
+                                                                        # Can be used for timers
+                                                                    
+                                                        elif secInput == "no":
+                                                            break
+                                                else:
+                                                    xFilter = False
+                                                    print("")
+                                                
+                                        elif user_input == 3:
+                                            break
                                         
-                            elif user_input == 9:
+                                except:
+                                    print("T Function Error: failure in initializing volunteer controls")
+                                else:
+                                    pass
+
+                            elif user_input == 8:
                                 break    
                                 
         except:
@@ -964,7 +1135,7 @@ def administratorPanel():
         print("3 • Generate Volunteer Certificate")
         print("4 • Get System Statistics")
         print("5 • Logout")        
-        
+        print(" ")
         try:
             userInput = int(input("Navigate to ‣ "))
             # add if statement for out of range numbers
@@ -998,46 +1169,55 @@ def administratorPanel():
 Account creation functions    
 """
 
+createVxFilter = False # Created here as a static variable to prevent function conflict
 
 def createVolAccount():
     while True:
-        print(" ")
-        print("⎧ Volunteer Management System")
-        print("⎩ Authorization ➢ Create a Volunteer Account")
-        print("  ")
-
-        print("- Enter the following information to register as a Volunteer")
+        global createVxFilter
         try:
-            fullname = str(input("Full name ‣ "))
-            mobile = str(input("Mobile number ‣ "))
-            email = str(input("Email ‣ "))
-            educationLevel = str(input("Education level as 'Bachelor, Masters or PhD' ‣ "))
-            Year = int(input("Date of Birth - Year ‣ "))
-            Month = int(input("Date of Birth - Month ‣ "))
-            Day = int(input("Date of Birth - Day ‣ "))
-            DOB = date(Year, Month, Day)
-            skills = str(input("Skills separated by , ‣ "))
+            if createVxFilter == True:
+                print(" ")
+                print("Restriction: You have already been registered as a volunteer")
+            else:
+                print(" ")
+                print("⎧ Volunteer Management System")
+                print("⎩ Authorization ➢ Create a Volunteer Account")
+                print("  ")                
+                print("- Enter the following information to register as a Volunteer")
+                
+                fullname = str(input("Full name ‣ "))
+                mobile = str(input("Mobile number ‣ "))
+                email = str(input("Email ‣ "))
+                educationLevel = str(input("Education level as 'Bachelor, Masters or PhD' ‣ "))
+                Year = int(input("Date of Birth - Year ‣ "))
+                Month = int(input("Date of Birth - Month ‣ "))
+                Day = int(input("Date of Birth - Day ‣ "))
+                DOB = date(Year, Month, Day)
+                skills = str(input("Skills separated by , ‣ "))
+                
         except:
             print("Invalid Request: something went wrong, try again later.")
         else:
-            try:
-                volunteer = Volunteer(
-                fullname, mobile, email, educationLevel,  DOB, skills
-            )
-                currentUser.append(volunteer)
-                print("Your account has been created successfully!")
-                
-                for obj in currentUser:
-                    print(obj)
-                for vol in Volunteer.volunteerRecord: # remove 
-                    print(vol)
-            except:
-                print("Invalid Request: something went wrong, try again later.")    
+            if createVxFilter == True:
+                print(" ")
+                system()
             else:
-                global system_new_users
-                system_new_users += 1
-                print("Redirecting you to volunteer panel..")
-                volunteerPanel()
+                try:
+                    volunteer = Volunteer(
+                    fullname, mobile, email, educationLevel,  DOB, skills
+                )
+                    currentUser.append(volunteer)
+                    print("Your account has been created successfully!")
+                    createVxFilter = True
+                    for obj in currentUser:
+                        print(obj,"\n")
+                except:
+                    print("Invalid Request: something went wrong, try again later.")    
+                else:
+                    global system_new_users
+                    system_new_users += 1
+                    print("Redirecting you to volunteer panel..")
+                    login()
 
 
 
@@ -1059,43 +1239,56 @@ def login():
 
         try:
             user_id = str(input("Username ‣ "))
+            user_id = user_id.upper()
             #userActualID = user_id.strip(user_id[5:-1])
             x = ""
             global system_s_logins, system_f_logins
-                
+            xFilter = False
+            
             if user_id.startswith('V'):
                 for volunteer in Volunteer.volunteerRecord:
                     if volunteer.getUserID() == user_id :
                         currentUser.append(volunteer)
                         system_s_logins += 1
+                        xFilter = True
                         volunteerPanel()
                 else:
-                    system_f_logins += 1
-                    print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    if xFilter == False:
+                        system_f_logins += 1
+                        print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    else:
+                        xFilter = False
                     
 
             elif user_id.startswith('O'):
                 for organizer in Organization_Representative.organizersRecord:
                     if organizer.getUserID() == user_id:
                         system_s_logins += 1
+                        xFilter = True
                         currentUser.append(organizer)
                         representativePanel()
                         
                 else:
-                    system_f_logins += 1
-                    print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
-                    
+                    if xFilter == False:
+                        system_f_logins += 1
+                        print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    else:
+                        xFilter = False
 
             elif user_id.startswith('A'):
                 for admin in Administrator.administratorsRecord:
                     if admin.getUserID() == user_id:
                         system_s_logins += 1
+                        xFilter = True
                         currentUser.append(admin)
                         administratorPanel()
                         
                 else:
-                    system_f_logins += 1
-                    print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    if xFilter == False:
+                        system_f_logins += 1
+                        print("Invalid Username: the entered username doesn't match any user in our records, try again later..")
+                    else:
+                        xFilter = False
                     
 
             else:
@@ -1125,7 +1318,7 @@ def system():
         print("2 • Create Volunteer Account")
         print("3 • Load Testing File")
         print("4 • Exit")
-
+        createAccount = False
         try:
             options = [1,2,3,4,0,8,9]
             userInput = int(input("Login method ‣ "))
@@ -1138,7 +1331,16 @@ def system():
                 if userInput == 1: 
                     login()
                 elif userInput == 2:
-                    createVolAccount()
+                    try:
+                        createVolAccount()
+                        createAccount = True
+                    except:
+                        print("Error: UNABLE TO RUN MODULE")
+                    else:
+                        if createAccount == True:
+                            createAccount = False
+                            print(" ")
+                            break
                 elif userInput == 3:
                     try:
                         if len(Task.tasksRecord) == 6:
@@ -1150,8 +1352,9 @@ def system():
                     except:
                         print("Failed to load testing file")
                 elif userInput == 4:
-                    for obj in currentUser:
-                        print(obj)
+                    print("Shutting Down..")
+                    print("System Down")
+                    break
                 elif userInput == 0:
                     for org in Organization.organizationRecord:
                         for rep in org.getRepresentatives():

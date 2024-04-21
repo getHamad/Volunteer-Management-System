@@ -96,7 +96,7 @@ class Task:
         return data
     
     def __str__(self):
-        return f"Task No: {self.__taskNo}\nTitle: {self.__title}\nSkills: {self.__requiredSkills}\nCredit Hours: {self.__creditHour}\nVolunteers Needed: {self.__numOfVolunteersNeeded}\nStatus: {self.__status}\n===================="
+        return f"⎡ Task No: {self.__taskNo}\n├ Title: {self.__title}\n├ Skills: {self.__requiredSkills}\n├ Credit Hours: {self.__creditHour}\n├ Volunteers Needed: {self.__numOfVolunteersNeeded}\n⎣ Status: {self.__status}\n"
 
 
 class User:
@@ -318,7 +318,7 @@ class Volunteer(User):
     
     
     def __str__(self):
-        return f"{super().__str__()}\nTotal V Hours: {self.__totalVolunteeringHrs}"
+        return f"{super().__str__()}\nTotal Volunteering Hours: {self.__totalVolunteeringHrs}\nSkills: {self.__skills}"
 
 
 class Volunteer_Opportunity:
@@ -403,17 +403,13 @@ class Volunteer_Opportunity:
         
 
     def getAssignedVolunteers(self):
-        
-        data = ""
-        for obj in self.__assignedVolunteers:
-            data += "\t" + {str(obj)} + "\n"
-        return data
+        return self.__assignedVolunteers
 
         """
         Global functions 
         """
 
-    def setInterest(self, interest):
+    def setInterest(self, interest = Volunteer()):
         """
         setInterest: this function adds a volunteer to the list of interested volunteers
 
@@ -424,7 +420,7 @@ class Volunteer_Opportunity:
 
     def getInterest(self):
         """
-        getInterest: this funcion provides a list of interested volunteers
+        getInterest: this function provides a list of interested volunteers
 
         Returns:
             list: this list contains all volunteers willing to take the opportunity
