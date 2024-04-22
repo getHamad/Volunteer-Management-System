@@ -4,8 +4,8 @@ from datetime import datetime, date
 
 Title: Volunteer Management System
 File: index.py
-Use of File: back-end of the functions, called as the "base structure" of the overall system
 Imports: datetime
+Use of File: back-end of the different functions in system.py, called as the "base structure" of the overall system
 Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
 
 """
@@ -57,22 +57,9 @@ class Task:
 
     def setNumOfVolunteerNeeded(self, num):
         self.__numOfVolunteersNeeded = num
-        
-        """
-        Global functions 
-        """
-
-    def getNumOfVolunteerNeeded(taskNo):
-        for task in Task.tasksRecord:
-            if task.getTaskNo() == taskNo:
-                return f"This task requires {task.__numOfVolunteersNeeded} persons to be accomplished"
-
-    # Exception Handling, task number not found!!!
 
     def updateStatus(self, status):
         self.__status = status
-
-    # Exception Handling, task number not found!!!
 
     def getStatus(self):
         """
@@ -82,24 +69,16 @@ class Task:
             str: the function returns a string data type
         """
         return self.__status
-
-    # Exception Handling, task number not found!!!
-
-    def getTasks():
+                    
         """
-        getTasks: this function returns a list of tasks that are already registered in the system
-
-        Returns:
-            str: the output will be "string" to print the full detail of the task as in __str__ function
+        Global functions 
         """
-        data = ""
-        for obj in Task.tasksRecord:
-            if obj.getTitle() == "":
-                pass
-            else:
-                data += "\t" + str(obj) + "\n"
-        return data
-    
+
+    def getNumOfVolunteerNeeded(taskNo):
+        for task in Task.tasksRecord:
+            if task.getTaskNo() == taskNo:
+                return f"This task requires {task.__numOfVolunteersNeeded} persons to be accomplished"
+
     def __str__(self):
         return f"⎡ Task No: {self.__taskNo}\n├ Title: {self.__title}\n├ Skills: {self.__requiredSkills}\n├ Credit Hours: {self.__creditHour}\n├ Volunteers Needed: {self.__numOfVolunteersNeeded}\n⎣ Status: {self.__status}\n"
 
@@ -109,9 +88,6 @@ class User:
     Super class of three other classes (Administrator, Organization Representative, and Volunteer)
     User class contains attributes : user id, full name, mobile number, email, education level, date of birth, and date of join.
     """
-
-
-
 
     userRecord = []
 
@@ -233,17 +209,7 @@ class Volunteer(User):
 
     def setSkills(self, skills):
         self.__skills = skills.split(",")
-
-    def getSkills(self):
         
-        data = ""
-        for skill in self.__skills:
-            data += "\t" + str(skill) + "\n"
-        return data
-
-    def addTask(self, task=Task()):
-        self.__tasks.append(task)
-
     def getTasks(self):
         """
         getTasks: this function returns the tasks assigned to a volunteer
@@ -252,6 +218,24 @@ class Volunteer(User):
             list: the list contains the tasks that the volunteer should accomplished
         """
         return self.__tasks
+    
+    def getTotalVolunteerHours(self):
+        return self.__totalVolunteeringHrs  
+    
+    def getCompletedTasks(self):
+        """
+        getCompletedTasks: this function provides the completed tasks by the user
+
+        Returns:
+            int: this function provides the integer of the total volunteering hours
+        """
+        return self.__completedTasks
+    
+
+    #Aggregation
+    def addTask(self, task=Task()):
+        self.__tasks.append(task)
+
 
     def setTotalVolunteerHours(self, sign="", amount=0):
         """
@@ -277,9 +261,7 @@ class Volunteer(User):
         else:
             return f"Error, check your inputs again"
         
-    def getTotalVolunteerHours(self):
-        return self.__totalVolunteeringHrs
-    
+    #Aggregation
     def addCompletedTasks(self, task=Task()):  
         """
         addCompletedTasks: this function appends an existing task in the assigned task to the completed tasks list.
@@ -293,35 +275,7 @@ class Volunteer(User):
         self.__completedTasks.append(task)
         self.__tasks.remove(task)
 
-    def getCompletedTasks(self):
-        """
-        getCompletedTasks _summary_
 
-        Returns:
-            _type_: _description_
-        """
-        return self.__completedTasks
-
-    def getTotalVolunteerHours(self):
-        return self.__totalVolunteeringHrs
-
-        """
-        Global functions 
-        """
-    def getAllVolunteers():
-        """
-        getAllVolunteers: returns all existing volunteers in the system
-
-        Returns:
-            String: returns a string of volunteer information
-        """
-        
-        data = ""
-        for obj in Volunteer.volunteerRecord:
-            data += "\t" + str(obj) + "\n"
-        return data
-    
-    
     def __str__(self):
         return f"{super().__str__()}\nTotal Volunteering Hours: {self.__totalVolunteeringHrs}\nSkills: {self.__skills}"
 
@@ -390,6 +344,7 @@ class Volunteer_Opportunity:
     def getTasks(self):
         return self.__tasks
 
+    # Aggregation
     def addToAssignedVolunteers(self, volunteer = Volunteer()): 
         """
         addToAssignedVolunteers: this function adds a volunteer to a list of assigned volunteers.
@@ -439,10 +394,11 @@ class Volunteer_Opportunity:
 
         Args:
             task (object, Task()): the task refers to an object in the T. Defaults to Task().
-            status (str, optional): _description_. Defaults to "".
+            status (str, optional): the status of the task that will be updated.
 
         Returns:
-            _type_: _description_
+            None: if the 'if' condition is met
+            String: if the 'else' condition is met
         """
         lowerStatus = status.lower()
         if task in self.__tasks:
@@ -472,7 +428,7 @@ class Volunteer_Opportunity:
 
 class Organization_Representative(User):
     """
-    Child class of User, with attributes including user Id.
+    Child class of User with its attributes including user Id
     """
     
     organizersRecord = []
@@ -501,7 +457,7 @@ class Organization_Representative(User):
 
 class Organization:
     """
-    Organization class with attributes including organization name, description, list of opportunities, and list of representatives.
+    Organization class with attributes including organization name, description, list of opportunities, and list of representatives
     """
 
     organizationRecord = []
@@ -533,14 +489,14 @@ class Organization:
         self, title, date, startingTime, endingTime, location  # update this function
     ):
         """
-        createOpportunity _summary_
+        createOpportunity: this function will allow to create a new opportunity within the organization, which represents a composition relationship
 
         Args:
-            title (_type_): _description_
-            date (_type_): _description_
-            startingTime (_type_): _description_
-            endingTime (_type_): _description_
-            location (_type_): _description_
+            title (str): the title of the opportunity
+            date (date): the data of the opportunity
+            startingTime (str): the starting time
+            endingTime (str): the ending time
+            location (str): the location of the opportunity
         """
         
         opportunity = Volunteer_Opportunity(
@@ -550,68 +506,65 @@ class Organization:
 
     def deleteOpportunity(self, opportunityCode):
         """
-        deleteOpportunity _summary_
+        deleteOpportunity: this function allows to delete a specific opportunity within an organization
 
         Args:
-            opportunityCode (_type_): _description_
+            opportunityCode (str): the code that will allow to specify a specific opportunity
 
-        Returns:
-            _type_: _description_
         """
         for op in self.__opportunities:
             if op.getOpportunityCode() == opportunityCode:
                 self.__opportunities.remove(op)
 
 
-    def getOpportunities(self):
+    def getOpportunities(self) -> list:
         """
-        getOpportunities _summary_
+        getOpportunities returns the list of opportunities that are in the organization
 
         Returns:
-            _type_: _description_
+            List: list of opportunity objects
         """
         return self.__opportunities
 
-    def setRepresentative(self, rep=Organization_Representative()):
+    def setRepresentative(self, rep=Organization_Representative()) -> None:
         """
-        setRepresentatives _summary_
+        setRepresentatives: allows to set a representative to an organization
 
         Args:
-            rep (_type_, optional): _description_. Defaults to Organization_Representative().
+            rep (Object): this is an object of representative
         """
         self.__representatives.append(rep)
 
-    def getRepresentatives(self):
+    def getRepresentatives(self) -> list:
         """
-        getRepresentatives _summary_
+        getRepresentatives: this function provides all the representatives in a given organization
 
         Returns:
-            _type_: _description_
+            list: the list contains all representatives in the organization
         """
         return self.__representatives
 
-    def setOrgCode(self, code):
+    def setOrgCode(self, code) -> None:
         self.__organizationCode = code
 
-    def getOrgCode(self):
+    def getOrgCode(self) -> str:
         return self.__organizationCode
 
+    #Composition
     def addOpportunityToOrg(
         orgCode, otitle, odate, ostartingTime, oendingTime, olocation
     ) -> str:
         """
-        addOpportunityToOrg _summary_
+        addOpportunityToOrg: this function allows to add an opportunitiy to an organization
 
         Args:
-            orgCode (_type_): _description_
-            otitle (_type_): _description_
-            odate (_type_): _description_
-            ostartingTime (_type_): _description_
-            oendingTime (_type_): _description_
-            olocation (_type_): _description_
+            orgCode(str): this code can be used to specify a specific opportunity
+            otitle (str): this represents the title of the opportunity
+            odate(date): this represents the date of the opportunity
+            ostartingTime (str): the starting time
+            oendingTime (str): the ending time
+            olocation (str): the location of the opportunity
 
-        Returns:
-            _type_: _description_
         """
         
         orgName = ""
@@ -701,16 +654,16 @@ class Administrator(User):
 
     def registerOrganizations(self, name, description, code):
         """
-        registerOrganizations _summary_
+        registerOrganizations: this function allows the Admin to register organizations using the attributes of organization "Composition"
 
         Args:
-            name (_type_): _description_
-            description (_type_): _description_
-            code (_type_): _description_
+            name (str): the name of the organization
+            description (str): the description of the organization
+            code (str): the code of the organization
 
 
         Returns:
-            _type_: _description_
+            str: massage
         """
         try:
             org = Organization(name, description, code)
@@ -722,14 +675,14 @@ class Administrator(User):
         self, org=Organization(), rep=Organization_Representative()
     ):
         """
-        assignRepresentative _summary_
+        assignRepresentative: this function allows to assign a representative to an organization
 
         Args:
-            org (_type_, optional): _description_. Defaults to Organization().
-            rep (_type_, optional): _description_. Defaults to Organization_Representative().
+            org (Object): this is an object from organization class. 
+            rep (Object): this is an object from representative class.
 
         Returns:
-            _type_: _description_
+            str: massage 
         """
         if org:
             org.setRepresentatives(rep)
@@ -738,11 +691,11 @@ class Administrator(User):
 
     def generateCertificate(self, certificate=Certificate(), vol=Volunteer()):
         """
-        generateCertificate _summary_
+        generateCertificate: this function allow to generate a certificate for a volunteer
 
         Args:
-            certificate (_type_, optional): _description_. Defaults to Certificate().
-            vol (_type_, optional): _description_. Defaults to Volunteer().
+            certificate (Object): this is an object from class Certificate. Defaults to Certificate().
+            vol (Object): this is an object from class Volunteer. Defaults to Volunteer().
 
         Returns:
             _type_: _description_

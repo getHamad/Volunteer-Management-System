@@ -4,9 +4,9 @@ from index import *
 
 Title: Volunteer Management System
 File: saves.py
+Imports: index.py / datetime
 Use of File: back-end of the backup, called as the "save of different records" of the overall system,
 and can be used to load a set of already made users, organizations, opportunities, and tasks
-Imports: index.py / datetime
 Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
 
 """
@@ -112,7 +112,7 @@ class Save:
 
         # 10 Volunteer Objects
         Ahmed_Hamad = Volunteer(
-            "Ahmed Hamad Naser", "0501221844", "ahmed@zu.ac.ae", "PhD", date(2000, 2, 2), "Team Work, Communication")
+            "Ahmed Hamad Naser", "0501221844", "ahmed@zu.ac.ae", "PhD", date(2000, 2, 2), "Team Work,Communication")
         Fatima_Ali = Volunteer(
             "Fatima Ali Hassan", "0502334455", "fatima@zu.ac.ae", "Master's", date(1998, 3, 10), "Communication,Active Listening")
         Salem_AlMansoori = Volunteer(
@@ -186,6 +186,7 @@ class Save:
         
         
         # Inserting opportunities
+        # Composition
         Emirates_Red_Crescent.createOpportunity("Ramadan Food Distribution", date(2024, 4, 1), "Morning", "Afternoon", "Abu Dhabi")
         Emirates_Red_Crescent.createOpportunity("Youth Tutoring and Education", date(2024, 9, 15), "Afternoon", "Evening", "Dubai")
         Emirates_Red_Crescent.createOpportunity("Disaster Recovery and Support", date(2024, 11, 10), "Noon", "Evening", "Sharjah")
@@ -212,6 +213,7 @@ class Save:
         Adding tasks to opportunities
         ....
         """
+        # Aggregation
         Emirates_Red_Crescent.addTaskToOpportunity(Food_Distribution, 1)
         Emirates_Red_Crescent.addTaskToOpportunity(Tutoring, 2)
         Emirates_Red_Crescent.addTaskToOpportunity(Disaster_Response, 3)

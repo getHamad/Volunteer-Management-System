@@ -5,9 +5,9 @@ from datetime import datetime, date
 
 Title: Volunteer Management System
 File: system.py
+Imports: index.py / saves.py / datetime
 Use of File: front-end of the system, called as the "Panel" of the overall system
 and used to execute different set of actions, and tasks throughout the system
-Imports: index.py / saves.py / datetime
 Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
 
 """
@@ -412,6 +412,7 @@ def updateVolunteeringOpportunity():
                     else:
                         
                         print("- The following are your opportunity controls\n")
+                        print(" ")
                         print("1 • Update Title")
                         print("2 • Update Date")
                         print("3 • Update Starting Time")
@@ -436,7 +437,7 @@ def updateVolunteeringOpportunity():
                             print("\n")
                             if user_input == 1:
                                 try:
-                                    newTitle = str(input("Title ‣ "))
+                                    newTitle = str(input("New Title ‣ "))
                                 except:
                                     print("Invalid Input: your Title must be string")
                                 else:
@@ -474,7 +475,7 @@ def updateVolunteeringOpportunity():
                                         print("T Function Error: unable to alter opportunity date")
                             elif user_input == 3:
                                 try:
-                                    new_starting_time = str(input("Starting Time ‣ "))
+                                    new_starting_time = str(input("New Starting Time ‣ "))
                                 except:
                                     print("Invalid Input: your input must represent a date")
                                 else:
@@ -491,7 +492,7 @@ def updateVolunteeringOpportunity():
                                         print("T Function Error: unable to alter opportunity starting date")    
                             elif user_input == 4:
                                 try:
-                                    new_ending_time = str(input("Ending Time ‣ "))
+                                    new_ending_time = str(input("New Ending Time ‣ "))
                                 except:
                                     print("Invalid Input: your input must represent an Ending Time")
                                 else:
@@ -508,7 +509,7 @@ def updateVolunteeringOpportunity():
                                         print("T Function Error: unable to alter opportunity ending date") 
                             elif user_input == 5:
                                 try:
-                                    new_Location = str(input("Location ‣ "))
+                                    new_Location = str(input("New Location ‣ "))
                                 except:
                                     print("Invalid Input: your input must represent a Location")
                                 else:
@@ -582,12 +583,13 @@ def updateVolunteeringOpportunity():
                                                                             try:
                                                                                 task.setTitle(forUserInput)
                                                                             except:
-                                                                                print("F Function Error: failure in altering task")
+                                                                                print("F Function Error: failure in the process of altering task")
                                                                             else:
                                                                                 print("Your task title has been altered successfully..\n")
                                                                         
                                                                     elif thiUserInput == 2: 
                                                                         try:
+                                                                            print("Recommended Status Selection ☛ 'Pending', 'Paused', 'Ongoing', 'Completed', 'Canceled'")
                                                                             fifUserInput = str(input("New Status ‣ "))
                                                                         except Exception:
                                                                             print("Invalid Input: your input must be an string")
@@ -803,7 +805,7 @@ def deleteVolunteeringOpportunity():
                             
                             if userInput.lower() == "yes":
                                 try:
-                                    userInput = int(input("Enter opportunity code ‣ "))
+                                    userInput = int(input("Enter Opportunity Code ‣ "))
                                 except:
                                     print("Invalid Input: your input must be an opportunity code.. e.x. '20'")
                                 else:
@@ -910,6 +912,7 @@ def registerOrganization():
         finally:
             print("Returning to the previous page..")
             break
+
 def assignRepresentative():
     while True:
         print(" ")
@@ -1003,7 +1006,7 @@ def assignRepresentative():
         finally:
             print("Returning to the previous page..")
             break
-        
+
 def generateCertificate():
     while True:
         print(" ")
@@ -1077,8 +1080,6 @@ def generateStatistics():
         
         organizations = 0
         opportunities = 0
-        
-        
         
         try:
             # USER STATS
@@ -1174,6 +1175,7 @@ def administratorPanel():
             print("Invalid Input: your input must be a number in range of 1 - 5")
             
         try:
+            
             if userInput == 1:
                 registerOrganization()
             elif userInput == 2:
@@ -1197,7 +1199,7 @@ def administratorPanel():
 
 
 """
-Account creation functions    
+    Account creation functions    
 """
 
 createVxFilter = False # Created here as a static variable to prevent function conflict
@@ -1240,6 +1242,7 @@ def createVolAccount():
                     currentUser.append(volunteer)
                     print("Your account has been created successfully!")
                     createVxFilter = True
+                    
                     for obj in currentUser:
                         print(obj,"\n")
                 except:
@@ -1339,17 +1342,18 @@ def system():
         Exception: _description_
     """
     while True:
-        print(" ")
+        print("  ")
         print("⎧ Volunteer Management System")
         print("⎩      Authorization       ")
         print("  ")
-
         print("- Select your login method\n")
         print("1 • Existing Account")
         print("2 • Create Volunteer Account")
         print("3 • Load Testing File")
         print("4 • Exit")
+        
         createAccount = False
+        
         try:
             options = [1,2,3,4,0,8,9]
             userInput = int(input("Login method ‣ "))
@@ -1358,6 +1362,7 @@ def system():
         except Exception:
             print("Invalid Input: your input must be a number in range of 1 - 2")
         else:
+            
             try:
                 if userInput == 1: 
                     login()
@@ -1386,11 +1391,11 @@ def system():
                     print("Shutting Down..")
                     print("System Down")
                     break
-                elif userInput == 0:
+                elif userInput == 9:
                     for org in Organization.organizationRecord:
                         for rep in org.getRepresentatives():
                             print(rep)
-                elif userInput == 9:
+                elif userInput == 0:
                     for admin in Administrator.administratorsRecord:
                         print(admin)
                 elif userInput == 8:
