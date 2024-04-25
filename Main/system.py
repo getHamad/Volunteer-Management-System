@@ -15,7 +15,7 @@ Author(s): Hamad Almazrouei, Abdullah Alzaabi, Tahnoon Alzaabi
 
 """
     Title: Handling Logged-in User & its related functions
-    Use of Block: 
+    Use of Block: this block handle's the logged-in user information through the use of its object 
 """
 
 currentUser = []
@@ -85,8 +85,7 @@ def viewOpportunities():
             break
         else:
             pass
-
-
+        
         try:
                 userInput = str(input("Would you like to view a specific organization opportunities? ‣ "))
                 userInLower = userInput.lower()
@@ -196,8 +195,6 @@ def viewAssignedTasks():
             if userInput: 
                 print("Returning to the previous page..")
                 break
-            
-
 
 def viewCompletedTasks():
     while True:
@@ -205,7 +202,6 @@ def viewCompletedTasks():
         print("⎧\tVolunteer Management System")
         print(f"⎩\tVolunteer Panel ➢ View Completed Volunteering Tasks")
         print("  ")
-        
         try:
             for obj in currentUser:
                 completedTasks = obj.getCompletedTasks()
@@ -231,7 +227,6 @@ def viewVolunteeringHours():
         print("⎧\tVolunteer Management System")
         print(f"⎩\tVolunteer Panel ➢ View Completed Volunteering Hours")
         print("  ")
-        
         try:
             for obj in currentUser:
                 completedHours = obj.getTotalVolunteerHours()
@@ -256,14 +251,12 @@ def volunteerPanel():
         print("⎪ Volunteer Panel")        
         print(f"⎩ Welcome {getLoggedUserName()}!")
         print("  ")
-
         print("- The following are your controls as a volunteer\n")
         print("1 • View Volunteering Opportunities")
         print("2 • View Assigned Tasks")
         print("3 • View Completed Tasks")
         print("4 • View Volunteering Hours")
         print("5 • Logout")
-        
         try:
             choices = [1,2,3,4,5]
             userInput = int(input("Navigate to ‣ "))
@@ -288,9 +281,6 @@ def volunteerPanel():
                 raise Exception
         except Exception:
             print("S Panel Error: please try again later..")
-            
-        
-
 
 """
     Title: Representative Functions & Panel
@@ -311,7 +301,6 @@ def getOrganization():
         print("T Function Error: failure in accessing organization of representative")
     else:
         return organizationProfile
-
 
 def createVolunteeringOpportunity():
     while True:
@@ -356,12 +345,10 @@ def updateVolunteeringOpportunity():
         print("⎧ Volunteer Management System")
         print("⎩ Organization Representative Panel ➢ Update Volunteering Opportunity")
         print("  ")        
-        
         repOrganization = getOrganization() 
         selectedOpportunity = ""
         taskCache = 0
         try:
-            
             try:
                 print("- Choose from the following list the opportunity that you wish to update\n")
                         
@@ -371,7 +358,6 @@ def updateVolunteeringOpportunity():
             except:
                 print("T Function Error: failure in accessing organization opportunities")
             else:
-
                 try:
                     opCode = int(input("Opportunity Code ‣ "))
                 except:
@@ -712,8 +698,7 @@ def updateVolunteeringOpportunity():
                                 else:
                                     pass
                             elif user_input == 8:
-                                break    
-                                
+                                break
         except:
             print('Panel Error')
         else:
@@ -803,7 +788,6 @@ def representativePanel():
                     raise Exception
             except Exception:
                 print("S Panel Error: please try again later..")
-
 
 """
     Title: Administrators Functions & Panel
