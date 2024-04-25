@@ -211,7 +211,6 @@ class Save:
         
         """
         Adding tasks to opportunities
-        ....
         """
         # Aggregation
         Emirates_Red_Crescent.addTaskToOpportunity(Food_Distribution, 1)
